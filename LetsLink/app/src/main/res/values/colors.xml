@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="orange">#F44A22</color>
+    <color name="midnight">#161616</color>
+    <color name="grey">#E4E2E3</color>
+    <color name="silver">#FEF8E8</color>
+    <color name="stone">#A8AAAC</color>
+    <color name="gray">#E4E2E3</color>
+
+
+    <!-- Mpho Colours -->
+
+    <color name="red_alert">#FF4757</color>
+    <color name="orange_primary">#EF450E</color>
+    <color name="orange_faded">#44EF450E</color>
+    <color name="red">#F60B1D</color>
+    <color name="green">#2ED573</color>
+
+</resources>

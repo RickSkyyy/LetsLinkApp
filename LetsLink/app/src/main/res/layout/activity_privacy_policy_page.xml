@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Header with Logo -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/logoblack"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Let's Link Logo" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Privacy Policy"
+                    android:textSize="36sp"
+                    android:textColor="@color/orange_primary"
+                    android:textStyle="bold"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+
+            <!-- Introductory Statement -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your privacy and safety are our priority."
+                android:textSize="18sp"
+                android:textColor="@color/orange_primary"
+                android:textStyle="italic"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="4sp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Policy Content Container -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+
+                app:cardBackgroundColor="@android:color/transparent"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="289dp"
+                    android:layout_height="551dp"
+                    android:orientation="vertical"
+
+                    android:padding="24dp">
+
+                    <!-- Paragraph 1 -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:lineSpacingExtra="6sp"
+                        android:text="We collect only what's necessary to make planning trips with friends easy and safe, such as your profile info, trip details, and, if enabled, your location for group tracking. This data is used solely for features like coordinating plans, sharing updates, and letting friends see where you are if you choose."
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <!-- Paragraph 2 -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:lineSpacingExtra="6sp"
+                        android:text="Your personal information and location are never shared without your permission. All data is encrypted during storage and transfer."
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <!-- Paragraph 3 -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:lineSpacingExtra="6sp"
+                        android:text="We do not sell or rent your data to anyone. You can view, update, or delete your information at any time through the app's settings."
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <!-- Paragraph 4 -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="6sp"
+                        android:text="By using this app, you agree to these practices and our mission to make group travel safer and more fun for everyone."
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:alpha="0.3"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Done Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/done_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Done"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp"
+                android:backgroundTint="@color/orange_primary"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

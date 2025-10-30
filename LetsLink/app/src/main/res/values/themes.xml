@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.LetsLink" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.LetsLink" parent="Base.Theme.LetsLink" />
+
+    <style name="Theme.LetsLink." parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- This changes the header highlight colour for DatePicker / TimePicker -->
+        <item name="colorAccent">@color/white</item>
+    </style>
+
+    <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.DatePicker">
+        <item name="android:textColorPrimary">@color/white</item>  <!-- selected day text -->
+        <item name="android:textColorSecondary">@color/orange_primary</item> <!-- other text -->
+    </style>
+
+    <style name="MySpinnerDatePicker" parent="@android:style/Widget.Material.DatePicker">
+        <!-- This controls the wheel text colour -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- This controls the divider/selector colour -->
+        <item name="android:colorControlActivated">@color/orange_primary</item>
+    </style>
+
+</resources>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    android:background="#000000">
+
+    <!-- Top Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="@android:color/transparent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginStart="12dp"
+            android:fontFamily="sans-serif-medium" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/backArrow"
+        android:padding="24dp"
+        tools:ignore="NotSibling">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <!-- Profile Photo -->
+
+            <!-- Username -->
+
+            <ImageView
+                android:layout_width="207dp"
+                android:layout_height="198dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/circle_orange_border"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_profile_circle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="mphotlk"
+                android:textSize="22sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="sans-serif-medium" />
+
+            <!-- Full name -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mpho Tlokotsi"
+                android:textSize="16sp"
+                android:textColor="#9E9E9E"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="sans-serif" />
+
+            <!-- Info Items -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Location"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/white"
+                    android:padding="15dp"
+                    android:background="@drawable/info_card_background"
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="sans-serif" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="janedoe@gmail.com"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/white"
+                    android:padding="15dp"
+                    android:background="@drawable/info_card_background"
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="sans-serif" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="12 January 1991"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/white"
+                    android:padding="15dp"
+                    android:background="@drawable/info_card_background"
+                    android:fontFamily="sans-serif" />
+
+            </LinearLayout>
+
+            <!-- Emergency contacts -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Emergency Contacts"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:padding="15dp"
+                android:background="@drawable/info_card_background_white"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="sans-serif" />
+
+            <!-- Save Button -->
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/orange_primary"
+                android:text="Save"
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:drawableLeft="@drawable/ic_save"
+                android:drawableTint="@android:color/white"
+                android:drawablePadding="8dp"
+                android:paddingVertical="12dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

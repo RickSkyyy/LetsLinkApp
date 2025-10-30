@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    android:background="@color/midnight"
+    android:padding="16dp"
+   >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="40dp"> <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="@android:color/transparent">
+
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_arow_back"
+            android:contentDescription="Back"
+            app:tint="@color/orange_primary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Group" android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginStart="12dp"
+            android:fontFamily="sans-serif-medium" />
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="32dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/group_profile_image"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/accounticon"
+                app:civ_border_width="4dp"
+                app:civ_border_color="@color/orange_primary"
+                android:contentDescription="Group Profile Picture" />
+
+            <Button
+                android:id="@+id/btnUploadImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/orange_faded"
+                android:text="Upload Image"
+                android:textColor="@color/orange_primary"
+                android:textSize="12sp"
+                app:cornerRadius="8dp"
+                android:paddingHorizontal="16dp"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Group Name" android:textSize="14sp"
+            android:textColor="@color/orange_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etGroupName" android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="@color/orange_primary"
+            android:hint="Enter Group Name" android:inputType="text"
+            android:padding="10dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/stone"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="E.g., Squad Goals" android:textSize="12sp"
+            android:textColor="@color/stone"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Group Description" android:textSize="14sp"
+            android:textColor="@color/orange_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etGroupDescription" android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Describe your group" android:textColor="@android:color/white"
+            android:textColorHint="@color/stone"
+            android:backgroundTint="@color/orange_primary"
+            android:padding="10dp"
+            android:layout_marginBottom="4dp"
+            android:minLines="3"
+            android:gravity="top"
+            android:inputType="textMultiLine" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="E.g., For planning weekend hikes and trips." android:textSize="12sp"
+            android:textColor="@color/stone"
+            android:layout_marginBottom="32dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Invite Members"
+            android:textSize="14sp"
+            android:textColor="@color/orange_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnSelectMembers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/orange_faded"
+            android:text="Select Friends to Add"
+            android:textColor="@color/orange_primary"
+            app:cornerRadius="12dp"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/tvSelectedMembersCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0 friends selected"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="40dp" />
+
+
+        <Button
+            android:id="@+id/btnCreateGroup" android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/orange_primary"
+            android:text="Create Group"
+            />
+
+    </LinearLayout>
+</ScrollView>

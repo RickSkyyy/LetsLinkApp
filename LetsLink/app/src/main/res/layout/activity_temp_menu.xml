@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".TempMenu">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tempMenuTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Temp Menu"
+        android:textColor="@color/orange"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonEventVoting"
+        android:layout_marginTop="40dp"/>
+
+    <!-- Event Voting Button -->
+    <Button
+        android:id="@+id/buttonEventVoting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Event Voting"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/orange"
+        app:layout_constraintTop_toBottomOf="@id/tempMenuTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"/>
+
+    <!-- Map Functions Button -->
+    <Button
+        android:id="@+id/buttonMapFunctions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Map Functions"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/orange"
+        app:layout_constraintTop_toBottomOf="@id/buttonEventVoting"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"/>
+
+    <!-- Group Functions Button -->
+    <Button
+        android:id="@+id/buttonGroupFunctions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Group Functions"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/orange"
+        app:layout_constraintTop_toBottomOf="@id/buttonMapFunctions"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"/>
+
+    <!-- Splash Page Button -->
+    <Button
+        android:id="@+id/buttonSplashPage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Splash Page"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/orange"
+        app:layout_constraintTop_toBottomOf="@id/buttonGroupFunctions"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"/>
+
+    <Button
+        android:id="@+id/settingsPage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/orange"
+        android:text="Basic Settings Page"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSplashPage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
