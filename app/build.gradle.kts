@@ -90,6 +90,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.androidx.compose.ui.text)
     implementation(libs.androidx.media3.common.ktx)
+    implementation(libs.volley)
 
     // Testing
     testImplementation(libs.junit)

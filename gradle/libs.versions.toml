@@ -49,6 +49,7 @@ kotlinxIo = "0.5.4"
 mockk = "1.13.12"
 coreTesting = "2.2.0"
 coroutinesTest = "1.8.1"
+volley = "1.2.1"
 
 
 [libraries]
@@ -111,6 +112,7 @@ kotlinx-io-jvm = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-jvm", ver
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "coreTesting" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
