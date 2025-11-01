@@ -1,20 +1,30 @@
-# LetsLinkApp
-Plan and manage outings with your friends
+# LetsLink – Android (Kotlin)
 
-To run this application:
+Group-coordination app built in Android Studio (Kotlin)  
+- Swipe-vote on venues/times  
+- Real-time group chat  
+- Live location sharing  
+- SOS panic button  
+- Ticketmaster event feed  
 
-1.  **Download and Unzip** the provided ZIP file.
-2.  Open the solution by running the **"GovernmentWebApplication.sln"** file.
-3.  Once Visual Studio is open, click the **Run** button (or press F5).
+Status: Part 3 (POE) features in progress  
 
-### 🛠️ Prerequisites
+to still be implemeted:
 
-* You must have the **latest version of Visual Studio** and **C#** installed on your device.
+POE requirements:
 
-### ✨ New Features and Technical Additions (Part 2)
+- Register and login using google SSO (we only have login) 
 
-The application now includes a comprehensive **Local Events and Announcements** module built on advanced data structures:
+- Biometrics for authentication 
 
-* **Data Management:** Events are stored and sorted efficiently using **Sorted Dictionaries** (for date order) and **Dictionaries** (for fast category lookup).
-* **Event Prioritization:** A **Priority Queue** is used internally to manage and prioritize the display of the most upcoming events.
-* **Recommendation System:** A new feature that suggests personalized events based on the user's last search activity, utilizing **Sets** to analyze unique event categories.
+- Offline mode, synchronization for some features.
+
+- Real-time fortifications
+
+- Multi-language support (two south African languages aside from english)
+
+Our app requirements:
+- real-time group chat feature 
+- emergency notifications and safety features 
+- real-time location tracking
+- events from ticket master (pull via API)
