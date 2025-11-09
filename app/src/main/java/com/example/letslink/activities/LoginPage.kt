@@ -3,12 +3,17 @@ package com.example.letslink.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
@@ -39,6 +44,18 @@ class LoginPage : AppCompatActivity() {
 
     private lateinit var sessionManager: SessionManager
 
+    // Biometric authentication
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private lateinit var rememberMeCheckbox: CheckBox
+    private lateinit var biometricLoginButton: MaterialButton
+
+    companion object {
+        private const val SHARED_PREFS_NAME = "LetsLinkPrefs"
+        private const val REMEMBER_ME_KEY = "remember_me"
+        private const val SAVED_EMAIL_KEY = "saved_email"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         sessionManager = SessionManager(this)
         super.onCreate(savedInstanceState)
@@ -58,7 +75,7 @@ class LoginPage : AppCompatActivity() {
         }
 
         val dao: UserDao = LetsLinkDB.getDatabase(applicationContext).userDao()
-        val factory = ViewModelFactory(dao)
+        val factory = ViewModelFactory(dao,sessionManager)
         loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
         userViewModel = ViewModelProvider(this, factory)[UserViewModel::class.java]
 
@@ -68,6 +85,13 @@ class LoginPage : AppCompatActivity() {
 
         val emailEditText: EditText = findViewById(R.id.email_edit_text)
         val passwordEditText: EditText = findViewById(R.id.password_edit_text)
+
+        // Initialize biometric components
+        rememberMeCheckbox = findViewById(R.id.remember_me_checkbox)
+        biometricLoginButton = findViewById(R.id.biometric_login_button)
+        initBiometricAuth()
+        checkBiometricLogin()
+        loadSavedPreferences(emailEditText)
 
         hyperLinkForgotPassword.setOnClickListener {
             val intent = Intent(this, ResetPasswordPage::class.java)
@@ -80,9 +104,15 @@ class LoginPage : AppCompatActivity() {
             val password = passwordEditText.text.toString()
             searchEmail = email
 
+            saveRememberMePreference(rememberMeCheckbox.isChecked, email)
+
             loginViewModel.onEvent(LoginEvent.checkEmail(email))
             loginViewModel.onEvent(LoginEvent.checkPassword(password))
             loginViewModel.onEvent(LoginEvent.Login)
+        }
+
+        biometricLoginButton.setOnClickListener {
+            showBiometricPrompt()
         }
 
         lifecycleScope.launch {
@@ -97,10 +127,10 @@ class LoginPage : AppCompatActivity() {
                         )
                         val intent = Intent(this@LoginPage, HorizontalCoordinator::class.java)
                         startActivity(intent)
+                        finish()
                     }
 
                 }
-
 
                 signUpLink.setOnClickListener {
                     val intent = Intent(this@LoginPage, RegisterPage::class.java)
@@ -121,27 +151,135 @@ class LoginPage : AppCompatActivity() {
         }
     }
 
-            // Shakes the text fields and shows toast
-            private fun showLoginError(emailEditText: EditText, passwordEditText: EditText) {
-                val shake = AnimationUtils.loadAnimation(this, R.anim.shake)
-                emailEditText.startAnimation(shake)
-                passwordEditText.startAnimation(shake)
-                Toast.makeText(this, "User not found: Incorrect credentials", Toast.LENGTH_SHORT)
-                    .show()
-            }
+    private fun initBiometricAuth() {
+        val executor = ContextCompat.getMainExecutor(this)
 
-            override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-                super.onActivityResult(requestCode, resultCode, data)
-                if (requestCode == RC_SIGN_IN) {
-                    val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                    try {
-                        val account = task.getResult(Exception::class.java)
-                        loginViewModel.onEvent(LoginEvent.GoogleLogin(account.idToken!!))
-                    } catch (e: Exception) {
-                        loginViewModel.onEvent(LoginEvent.LoginFailed("Google sign in failed"))
+        biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    when (errorCode) {
+                        BiometricPrompt.ERROR_USER_CANCELED,
+                        BiometricPrompt.ERROR_NEGATIVE_BUTTON -> {
+                            Log.d("Biometric", "User chose password login")
+                        }
+                        else -> {
+                            Toast.makeText(this@LoginPage, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    performAutoLogin()
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    Toast.makeText(this@LoginPage, "Authentication failed", Toast.LENGTH_SHORT).show()
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric Login")
+            .setSubtitle("Log in using your fingerprint or face")
+            .setNegativeButtonText("Use Password")
+            .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.BIOMETRIC_WEAK)
+            .build()
+    }
+
+    private fun checkBiometricLogin() {
+        val biometricManager = BiometricManager.from(this)
+        when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.BIOMETRIC_WEAK)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                val sharedPref = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE)
+                if (sharedPref.getBoolean(REMEMBER_ME_KEY, false)) {
+                    biometricLoginButton.visibility = View.VISIBLE
+                }
+            }
+            else -> {
+                biometricLoginButton.visibility = View.GONE
             }
         }
+    }
 
+    private fun showBiometricPrompt() {
+        try {
+            biometricPrompt.authenticate(promptInfo)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Biometric authentication not available", Toast.LENGTH_SHORT).show()
+        }
+    }
 
+    private fun performAutoLogin() {
+        val sharedPref = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE)
+        val savedEmail = sharedPref.getString(SAVED_EMAIL_KEY, "")
+
+        if (!savedEmail.isNullOrEmpty()) {
+            lifecycleScope.launch {
+                val user = userViewModel.getUserByEmail(savedEmail)
+                if (user != null) {
+                    sessionManager.saveUserSession(user.userId, user.email, user.firstName)
+                    Toast.makeText(this@LoginPage, "Welcome back, ${user.firstName}!", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@LoginPage, HorizontalCoordinator::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this@LoginPage, "User account not found", Toast.LENGTH_SHORT).show()
+                    biometricLoginButton.visibility = View.GONE
+                }
+            }
+        } else {
+            Toast.makeText(this@LoginPage, "No saved login found", Toast.LENGTH_SHORT).show()
+            biometricLoginButton.visibility = View.GONE
+        }
+    }
+
+    private fun saveRememberMePreference(rememberMe: Boolean, email: String) {
+        val sharedPref = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putBoolean(REMEMBER_ME_KEY, rememberMe)
+            if (rememberMe) {
+                putString(SAVED_EMAIL_KEY, email)
+                checkBiometricLogin()
+            } else {
+                remove(SAVED_EMAIL_KEY)
+                biometricLoginButton.visibility = View.GONE
+            }
+            apply()
+        }
+    }
+
+    private fun loadSavedPreferences(emailEditText: EditText) {
+        val sharedPref = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE)
+        val rememberMe = sharedPref.getBoolean(REMEMBER_ME_KEY, false)
+        val savedEmail = sharedPref.getString(SAVED_EMAIL_KEY, "")
+
+        rememberMeCheckbox.isChecked = rememberMe
+        if (!savedEmail.isNullOrEmpty()) {
+            emailEditText.setText(savedEmail)
+        }
+    }
+
+    // Shakes the text fields and shows toast
+    private fun showLoginError(emailEditText: EditText, passwordEditText: EditText) {
+        val shake = AnimationUtils.loadAnimation(this, R.anim.shake)
+        emailEditText.startAnimation(shake)
+        passwordEditText.startAnimation(shake)
+        Toast.makeText(this, "User not found: Incorrect credentials", Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(Exception::class.java)
+                loginViewModel.onEvent(LoginEvent.GoogleLogin(account.idToken!!))
+            } catch (e: Exception) {
+                loginViewModel.onEvent(LoginEvent.LoginFailed("Google sign in failed"))
+            }
+        }
+    }
+}
