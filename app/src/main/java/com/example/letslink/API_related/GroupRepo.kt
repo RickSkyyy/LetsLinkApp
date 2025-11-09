@@ -1,4 +1,3 @@
-
 package com.example.letslink.API_related
 
 import com.example.letslink.SessionManager
@@ -13,9 +12,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
 
@@ -35,32 +37,145 @@ class GroupRepo(
     private val userDao: UserDao
 ) {
 
-
+    /**
+     * Fetches groups for a user by first syncing with Firebase, then returning local data
+     * This ensures groups are available offline after initial sync
+     */
     fun getGroupsByUserId(userId: UUID): Flow<List<Group>> {
-        //  existing method to convert the UUID to a String
+        CoroutineScope(Dispatchers.IO).launch {
+            syncGroupsWithFirebase(userId.toString())
+        }
         return groupDao.getNotesByUserId(userId.toString())
+    }
+
+    /**
+     * Fetches groups directly from Firebase where user is a member
+     * Provides real-time updates from Firebase database
+     */
+    fun getGroupsFromFirebase(userId: String): Flow<List<Group>> = callbackFlow {
+        val groupsRef = db.child("groups")
+
+        // Query by creator (userId field)
+        val query = groupsRef.orderByChild("userId").equalTo(userId)
+
+        val listener = query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val groupsList = mutableListOf<Group>()
+
+                snapshot.children.forEach { groupSnapshot ->
+                    val groupData = groupSnapshot.getValue(Group::class.java)
+                    groupData?.let { group ->
+                        val groupIdString = groupSnapshot.key ?: group.groupId.toString()
+                        try {
+                            group.groupId = UUID.fromString(groupIdString).toString()
+                        } catch (e: IllegalArgumentException) {
+                            println("WARNING: Invalid group ID format: $groupIdString")
+                        }
+                        groupsList.add(group)
+                    }
+                }
+
+                println("Fetched ${groupsList.size} groups from Firebase for user: $userId")
+                trySend(groupsList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                println("ERROR: Firebase groups fetch failed: ${error.message}")
+                close(error.toException())
+            }
+        })
+
+        awaitClose {
+            groupsRef.removeEventListener(listener)
+        }
+    }
+    /**
+     * Syncs groups from Firebase to local Room database
+     * Ensures offline availability of user's groups
+     */
+    suspend fun syncGroupsWithFirebase(userId: String) {
+        try {
+            println("DEBUG: Starting Firebase sync for user: $userId")
+            val groupsRef = db.child("groups")
+            val query = groupsRef.orderByChild("userId").equalTo(userId)
+            val snapshot = query.get().await()
+
+            println("DEBUG: Firebase query returned ${snapshot.childrenCount} groups")
+
+            val firebaseGroups = mutableListOf<Group>()
+
+            snapshot.children.forEach { groupSnapshot ->
+                println("DEBUG: Processing group: ${groupSnapshot.key}")
+                val groupData = groupSnapshot.getValue(Group::class.java)
+                if (groupData != null) {
+                    println("DEBUG: Group data: $groupData")
+                    val groupIdString = groupSnapshot.key ?: groupData.groupId.toString()
+                    try {
+                        groupData.groupId = UUID.fromString(groupIdString).toString()
+
+                        // Preserve the invite link from Firebase
+                        val existingGroup = groupDao.getGroupById(groupData.groupId)
+                        if (existingGroup != null && existingGroup.inviteLink != null) {
+                            groupData.inviteLink = existingGroup.inviteLink
+                        }
+
+                        firebaseGroups.add(groupData)
+                    } catch (e: IllegalArgumentException) {
+                        println("WARNING: Invalid group ID format: $groupIdString")
+                    }
+                }
+            }
+
+            println("DEBUG: Found ${firebaseGroups.size} groups to sync")
+
+            firebaseGroups.forEach { group ->
+                groupDao.insertGroup(group)
+                println("DEBUG: Inserted group: ${group.groupName} with invite link: ${group.inviteLink}")
+            }
+
+            println("Synced ${firebaseGroups.size} groups from Firebase to local DB for user: $userId")
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            println("ERROR: Failed to sync groups from Firebase: ${e.message}")
+        }
     }
     suspend fun getRecipientIdFromRoom(username: String): String? {
         return userDao.getUserByUsername(username)?.userId
     }
-    suspend fun getRecipientIdFromFirebase(username: String): String? {
+
+    suspend fun getRecipientIdFromFirebase(firstName: String): String? {
+        println("DEBUG: Searching for user with firstName: '$firstName'")
         val usersRef = db.child("users")
 
-
-        val query = usersRef.orderByChild("firstName").equalTo(username)
+        val query = usersRef.orderByChild("firstName").equalTo(firstName)
 
         return try {
-            // Fetch the data  Kotlin coroutine wrapper
             val snapshot = query.get().await()
+            println("DEBUG: Firebase user query result - exists: ${snapshot.exists()}, children count: ${snapshot.childrenCount}")
+
+            snapshot.children.forEach { userSnapshot ->
+                println("DEBUG: Found user - key: ${userSnapshot.key}, value: ${userSnapshot.value}")
+            }
 
             if (snapshot.exists()) {
-
-                snapshot.children.firstOrNull()?.key
+                val userId = snapshot.children.firstOrNull()?.key
+                println("DEBUG: Found user ID: $userId")
+                userId
             } else {
+                println("DEBUG: No user found with firstName: '$firstName'")
+
+                // Debug: Check what users actually exist in Firebase
+                val allUsers = usersRef.get().await()
+                println("DEBUG: All users in Firebase:")
+                allUsers.children.forEach { user ->
+                    println("DEBUG: User ${user.key}: ${user.child("firstName").getValue(String::class.java)}")
+                }
+
                 null
             }
         } catch (e: Exception) {
-            // Handle network errors, permission issues, etc.
+            println("DEBUG: Error searching Firebase: ${e.message}")
             e.printStackTrace()
             null
         }
@@ -71,11 +186,8 @@ class GroupRepo(
      * then synchronizing with the remote API, and then updating it
      */
     suspend fun createAndSyncGroup(group: Group): GroupResponse? {
-        //Save locally first
-        groupDao.insertGroup(group)
         val currentUserId = sessionManager.getUserId()
 
-        // calling group request which handles the sending request to api
         val apiRequest = GroupRequest(
             groupId = group.groupId.toString(),
             userId = currentUserId.toString(),
@@ -83,19 +195,20 @@ class GroupRepo(
             groupName = group.groupName,
         )
 
-        // Sync with the API
+        println("DEBUG: Sending API request: $apiRequest")
+
         return try {
             val response = groupApiService.createGroup(apiRequest)
 
+            // Update the group with the invite link before saving to local database
             val updatedGroup = group.copy(inviteLink = response.inviteLink)
             groupDao.insertGroup(updatedGroup)
-            println("Group synced successfully. Invite link received: ${response.inviteLink}")
-            //  Return the successful response which means the link has been generated
+
+            println("Group synced successfully. Invite link saved to local DB: ${response.inviteLink}")
             response
         } catch (e: Exception) {
             e.printStackTrace()
             println("ERROR: Failed to sync group ${group.groupId} with API.")
-            //Return null on failure
             null
         }
     }
@@ -106,25 +219,26 @@ class GroupRepo(
      *
      */
     suspend fun joinGroup(groupId: String, userID: UUID?): GroupResponse? {
+        val currentUserId = userID?.toString() ?: sessionManager.getUserId()
 
-        //Use SessionManager to get the current user ID
-        val currentUserId = sessionManager.getUserId()
+        if (currentUserId == null) {
+            println("ERROR: No valid user ID found for joining group")
+            return null
+        }
 
-        // Prepare the network request
         val apiRequest = JoinGroupRequest(
             groupId = groupId,
-            userId = currentUserId
+            userId = UUID.fromString(currentUserId.toString())
         )
 
-        // Call the API
         return try {
             val response = groupApiService.joinGroup(apiRequest)
 
             println("DEBUG API RESPONSE: $response")
 
             val newGroup = Group(
-                groupId = response.groupId,
-                userId = currentUserId,
+                groupId = response.groupId.toString(),
+                userId = currentUserId.toString(),
                 groupName = response.groupName,
                 description = response.description,
                 inviteLink = response.inviteLink
@@ -157,7 +271,6 @@ class GroupRepo(
                 // Convert List<Invites>
                 val invitesList: List<Invites> = invitesMap?.values?.toList() ?: emptyList()
 
-
                 trySend(invitesList)
             }
 
@@ -171,27 +284,37 @@ class GroupRepo(
             invitesRef.removeEventListener(listener)
         }
     }
+
     suspend fun assignInvite(
         recipientId: String,
         groupId: String,
         groupName: String,
         description: String
     ) {
+        println("DEBUG: assignInvite called with recipientId: '$recipientId', groupId: '$groupId'")
+
+        // First try to find the user in Firebase
+        val foundUserId = getRecipientIdFromFirebase(recipientId)
+        println("DEBUG: Found user ID from Firebase: $foundUserId")
+
+        if (foundUserId == null) {
+            println("DEBUG: User '$recipientId' not found in Firebase")
+            return
+        }
+
         val apiRequest = InviteRequest(
             groupId = groupId,
-            userId = recipientId,
+            userId = foundUserId,
             groupName = groupName,
             description = description
         )
 
         try {
-
             groupApiService.assignInviteToUser(apiRequest)
-            println("Invite for group $groupId successfully assigned to user $recipientId.")
+            println("Invite for group $groupId successfully assigned to user $foundUserId.")
         } catch (e: Exception) {
             e.printStackTrace()
-            println("ERROR: Failed to assign invite to user $recipientId.")
+            println("ERROR: Failed to assign invite to user $foundUserId.")
         }
     }
 }
-
