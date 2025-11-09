@@ -8,7 +8,6 @@
     android:background="@drawable/gradient_background"
     android:padding="24dp">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,8 +21,6 @@
             android:padding="32dp">
 
             <!-- Logo/Title -->
-
-            <!-- Login Title -->
             <ImageView
                 android:layout_width="295dp"
                 android:layout_height="161dp"
@@ -38,7 +35,6 @@
                 android:text="Login"
                 android:textSize="48sp"
                 android:textColor="@color/white"
-
                 android:textStyle="bold"
                 android:layout_marginBottom="32dp"
                 android:fontFamily="sans-serif-medium" />
@@ -62,8 +58,7 @@
                     app:boxCornerRadiusTopStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
-                    app:boxCornerRadiusBottomEnd="12dp"
-                    >
+                    app:boxCornerRadiusBottomEnd="12dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email_edit_text"
@@ -86,7 +81,6 @@
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusBottomEnd="12dp"
-
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -98,7 +92,14 @@
                         android:maxLines="1" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
+                <!-- Remember Me Checkbox -->
+                <CheckBox
+                    android:id="@+id/remember_me_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remember me"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="16dp" />
                 <!-- Forgot Password -->
                 <TextView
                     android:id="@+id/forgot_password_link"
@@ -127,8 +128,22 @@
                     android:textStyle="bold"
                     app:cornerRadius="12dp" />
 
+                <!-- Biometric Login Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/biometric_login_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="@color/purple"
+                    android:text="Login via biomterics"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:visibility="invisible"
+                    app:cornerRadius="12dp"
+                    app:icon="@drawable/ic_fingerprint"
+                    app:iconGravity="textStart" />
 
-                <!-- Sign Up Link -->
+                <!-- Google Sign In Button -->
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/google_sign_in_btn"
                     android:layout_width="245dp"
@@ -136,11 +151,11 @@
                     android:layout_gravity="center"
                     android:backgroundTint="@color/orange_primary"
                     android:text=""
-
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:cornerRadius="12dp" />
 
+                <!-- Sign Up Link -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
