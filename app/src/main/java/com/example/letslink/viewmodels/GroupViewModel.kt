@@ -137,32 +137,18 @@ class GroupViewModel (
             }
         }
     }
-    fun sendPersonalizedInvite(recipientUsername: String, group: Group // Get group details from local Room DB or memory
-    ) {
+    fun sendPersonalizedInvite(recipientUsername: String, group: Group) {
         viewModelScope.launch {
+            println("DEBUG: sendPersonalizedInvite called with username: '$recipientUsername', group: ${group.groupName}")
 
-            //  Call an api to convert the username to the Firebase User ID.
-            val actualRecipientId = try {
-                repository.getRecipientIdFromRoom(recipientUsername)
-            } catch (e: Exception) {
-                // Handle network or user not found error
-                _noteState.value = _noteState.value.copy(errorMessage = "User lookup failed for $recipientUsername.")
-                return@launch
-            }
-
-            //  Ensure the lookup for id is successful
-            if (actualRecipientId == null) {
-                _noteState.value = _noteState.value.copy(errorMessage = "User $recipientUsername not found.")
-                return@launch
-            }
-
-            // Call the backend API with the correct and verified ID
-            repository.assignInvite(
-                recipientId = actualRecipientId, // Using the verified ID
-                groupId = group.groupId.toString(),
-                groupName = group.groupName,
-                description = group.description
+            val result = repository.assignInvite(
+                recipientUsername,
+                group.groupId.toString(),
+                group.groupName,
+                group.description
             )
+
+            println("DEBUG: assignInvite result: $result")
         }
     }
     suspend fun getRecipientId(username: String): String? {
@@ -181,9 +167,10 @@ class GroupViewModel (
                 val title = noteState.value.groupName
                 val description = noteState.value.description
 
-                if(userID?.equals(null) == true || title.isBlank() || description.isBlank())
+                // FIX: Check if userID is null properly
+                if(userID == null || title.isBlank() || description.isBlank())
                 {
-                    if(userID?.equals(null) == true){
+                    if(userID == null){
                         _noteState.update { it.copy(errorMessage = "Error: Current user is not authorised to enter notes") }
                         return
                     }
@@ -191,10 +178,10 @@ class GroupViewModel (
                     return
                 }
 
-                // Create the local Group table
+                // FIX: Use the non-null userID variable
                 val newGroup = Group(
-                    groupId = UUID.randomUUID(),
-                    userId = sessionManager.getUserId(),
+                    groupId = UUID.randomUUID().toString(),
+                    userId = userID.toString(),
                     groupName = title,
                     description = description
                 )
@@ -215,7 +202,6 @@ class GroupViewModel (
                                 inviteLink = apiResponse.inviteLink
                             ) }
                         } else {
-                            // in the event that a link cant be generated
                             _noteState.update { it.copy(
                                 errorMessage = "Group saved locally but failed to generate invite link.",
                                 isSuccess = false,
@@ -223,7 +209,6 @@ class GroupViewModel (
                                 inviteLink = null
                             ) }
                         }
-
                     }
                     catch (e: Exception){
                         e.printStackTrace()
