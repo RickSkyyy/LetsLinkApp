@@ -1,5 +1,6 @@
 package com.example.letslink.model
 
+import android.R
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -19,13 +20,16 @@ import java.util.UUID
 )
 data class Group(
     @PrimaryKey
-    val groupId: UUID = UUID.randomUUID(),
+    var groupId:String = UUID.randomUUID().toString(),
 
-    val userId: UUID?,
+    val userId: String,
 
     val groupName: String,
 
     val description: String,
 
-    val inviteLink: String? = null
+    var inviteLink: String? = null
 )
+{
+    constructor() : this("","", "", "", null)
+}
