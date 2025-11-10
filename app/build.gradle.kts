@@ -151,4 +151,6 @@ dependencies {
     testImplementation(libs.core.testing)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
+ //biometrics
+    implementation("androidx.biometric:biometric:1.2.0-alpha05")
 }

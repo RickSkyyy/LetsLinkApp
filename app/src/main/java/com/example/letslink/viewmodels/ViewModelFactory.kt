@@ -2,10 +2,12 @@ package com.example.letslink.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.letslink.SessionManager
 import com.example.letslink.local_database.UserDao
 
 class ViewModelFactory(
-    private val dao: UserDao
+    private val dao: UserDao,
+    private val sessionManager: SessionManager
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
@@ -14,7 +16,7 @@ class ViewModelFactory(
             return UserViewModel(dao) as T
         }
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(dao) as T
+            return LoginViewModel(dao,sessionManager) as T
         }
 
 

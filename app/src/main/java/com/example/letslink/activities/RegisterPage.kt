@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.letslink.R
+import com.example.letslink.SessionManager
 import com.example.letslink.local_database.LetsLinkDB
 import com.example.letslink.model.User
 import com.example.letslink.model.UserEvent
@@ -32,15 +33,15 @@ class RegisterPage : AppCompatActivity() {
 
     private lateinit var viewModel: UserViewModel
     private val fbUserRepo = fb_userRepo()
-
+    private lateinit var sessionManager: SessionManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_register_page)
-
+        sessionManager = SessionManager(this)
         // Initialize ViewModel
         val dao = LetsLinkDB.getDatabase(applicationContext).userDao()
-        val factory = ViewModelFactory(dao)
+        val factory = ViewModelFactory(dao,sessionManager)
         viewModel = ViewModelProvider(this, factory)[UserViewModel::class.java]
 
         val signInButton: TextView = findViewById(R.id.sign_in_link)

@@ -10,3 +10,4 @@ data class GroupResponse(
     val inviteLink: String,
     val members: List<String>
 )
+

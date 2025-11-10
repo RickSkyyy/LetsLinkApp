@@ -92,17 +92,17 @@ class ReceivedLinks : Fragment() {
      */
     private fun setupRecyclerView() {
         adapter = JoinAdapter(
-            onJoinClick =  { invite ->
-                // The inviteLink is the actual groupId/token needed to join
-                val groupId = invite.inviteLink
+            onJoinClick = { invite ->
+                // Extract just the group ID from the inviteLink (which is the full URL)
+                val groupId = extractGroupIdFromInviteLink(invite.inviteLink)
                 val currentUserId = sessionManager.getUserId()
 
-                if (groupId.isNotBlank() && currentUserId.toString().isNotBlank()) {
-                    // function to join the group using the groupId
+                if (groupId != null && currentUserId.toString().isNotBlank()) {
+                    // function to join the group using the extracted groupId
                     viewModel.joinGroup(groupId, currentUserId)
                     Toast.makeText(requireContext(), "Attempting to join ${invite.groupName}...", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(requireContext(), "Error: Cannot join group.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Error: Cannot join group. Invalid invite link.", Toast.LENGTH_SHORT).show()
                 }
             }
         )
@@ -110,6 +110,18 @@ class ReceivedLinks : Fragment() {
         groupsRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@ReceivedLinks.adapter
+        }
+    }
+
+    /**
+     * Extracts the group ID from the full invite link URL
+     */
+    private fun extractGroupIdFromInviteLink(inviteLink: String): String? {
+        return try {
+            // Get the last part of the URL after the last "/"
+            inviteLink.substringAfterLast("/").takeIf { it.isNotBlank() }
+        } catch (e: Exception) {
+            null
         }
     }
 }

@@ -88,7 +88,7 @@ class CreateGroupFragment : Fragment() {
             addNote(etGroupName,edDesc,context,viewModel)
         }
     }
-    private fun addNote(edTitle: EditText, edDesc: EditText, context : Context,viewModel:GroupViewModel) {
+    private fun addNote(edTitle: EditText, edDesc: EditText, context: Context, viewModel: GroupViewModel) {
         val title = edTitle.text.toString()
         val description = edDesc.text.toString()
 
@@ -98,22 +98,26 @@ class CreateGroupFragment : Fragment() {
         }
         viewModel.onEvent(GroupEvent.setTitle(title))
         viewModel.onEvent(GroupEvent.setDecription(description))
-        //event to create group
         viewModel.onEvent(GroupEvent.createNote)
+
         viewLifecycleOwner.lifecycleScope.launch{
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.noteState.collect { state ->
                     if (state.isSuccess) {
                         Toast.makeText(context, "Group created successfully!", Toast.LENGTH_LONG).show()
-                        parentFragmentManager.popBackStack()
-                    }  else if(state.errorMessage != null){
-                        Toast.makeText(context, state.errorMessage, Toast.LENGTH_LONG).show()
 
+                        val inviteLink = state.inviteLink
+                        if (!inviteLink.isNullOrEmpty()) {
+                            showInviteLinkDialog(inviteLink)
+                        }
+
+                        parentFragmentManager.popBackStack()
+                    } else if(state.errorMessage != null){
+                        Toast.makeText(context, state.errorMessage, Toast.LENGTH_LONG).show()
                     }
                 }
             }
         }
-
     }
     /**
      * Displays a dialog with the invitation link and a copy button.
