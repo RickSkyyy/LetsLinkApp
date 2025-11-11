@@ -73,6 +73,7 @@ class LoginViewModel(private val dao: UserDao, private val sessionManager: Sessi
                 firebaseAuth.signInWithCredential(credential)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
+                            Log.d("google-check", task.result.user?.displayName!!)
                             _loginState.update {
                                 it.copy(
                                     email = task.result.user?.email!!,
@@ -101,6 +102,7 @@ class LoginViewModel(private val dao: UserDao, private val sessionManager: Sessi
                                     errorMessage = task.exception?.message
                                 )
                             }
+                            Log.d("google-check-failed","Failed")
                         }
                     }
 

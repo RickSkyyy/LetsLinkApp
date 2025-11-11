@@ -1,7 +1,9 @@
 // GroupChatActivity.kt
 package com.example.letslink.activities
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -13,8 +15,18 @@ import com.example.letslink.adapters.MessagesAdapter
 import com.example.letslink.models.ChatMessage
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.widget.ImageButton
+import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
+import com.example.letslink.local_database.GroupDao
+import com.example.letslink.local_database.LetsLinkDB
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import com.example.letslink.Network.PushApiClient
+import com.example.letslink.online_database.fb_ChatRepo
+import com.example.letslink.online_database.fb_userRepo
 
 class GroupChatActivity : AppCompatActivity() {
 
@@ -24,15 +36,35 @@ class GroupChatActivity : AppCompatActivity() {
     private lateinit var sendButton: ImageButton
     private lateinit var fabMain: FloatingActionButton
     private lateinit var fabMenu: LinearLayout
+    private lateinit var groupName : TextView
+    private lateinit var groupDao : GroupDao
+    private lateinit var chatRepo : fb_ChatRepo
+    private lateinit var userRepo : fb_userRepo
 
     private var isFabOpen = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var groupname : String = ""
         setContentView(R.layout.fragment_group_chat_u_i) // your layout
+        groupDao = LetsLinkDB.getDatabase(this).groupDao()
+        chatRepo = fb_ChatRepo()
+        userRepo = fb_userRepo()
+
+
+        val groupID = intent.getStringExtra("groupId")
+        Log.d("check-group-id",groupID!!)
+        lifecycleScope.launch {
+            val group = groupDao.getGroupById(groupID!!)
+            groupName = findViewById(R.id.group_name)
+            groupName.text = group?.groupName
+            groupname = group?.groupName!!
+
+        }
 
         recyclerView = findViewById(R.id.messages_recycler)
         messageInput = findViewById(R.id.message_inputt)
+
         sendButton = findViewById(R.id.send_button)
         fabMain = findViewById(R.id.fab_main)
         fabMenu = findViewById(R.id.fab_menu)
@@ -43,6 +75,36 @@ class GroupChatActivity : AppCompatActivity() {
 
         // Send button
         sendButton.setOnClickListener {
+
+
+            if(isInternetAvailable(this)) {
+                //fetch group from database online then get the members and send the chat message to them
+            chatRepo.getGroupMembers(groupID!!){members->
+                if(members.isNotEmpty()){
+                    val tokens  = userRepo.getUsersFcmTokens(members)
+                    Log.d("check-members",members.size.toString())
+                    try{
+                        //send message to each member
+                        //send notification to each member
+
+
+                            PushApiClient.sendMessageNotification(this, tokens, groupname, "text message")
+
+                    }catch(e : Exception){
+                        Log.d("check-error",e.toString())
+                    }
+
+                }
+
+            }
+
+
+            }else{
+                Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show()
+                //queue the messages in a database "offlineMessage" where it stores the groupID, userID who sent the message and the message itself.
+            }
+                //)
+
             val text = messageInput.text.toString()
             if (text.isNotEmpty()) {
                 val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
@@ -66,5 +128,18 @@ class GroupChatActivity : AppCompatActivity() {
             }
             isFabOpen = !isFabOpen
         }
+    }
+
+    private fun isInternetAvailable(context : Context): Boolean{
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+
+        return when {
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            else -> false
+        }
+
     }
 }

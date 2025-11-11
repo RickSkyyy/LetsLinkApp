@@ -4,10 +4,12 @@ import com.example.letslink.model.User
 import com.google.firebase.analytics.analytics
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.messaging.FirebaseMessaging
-
+import com.google.firebase.database.ValueEventListener
 
 class fb_userRepo(
     private val auth:FirebaseAuth = FirebaseAuth.getInstance(),
@@ -46,5 +48,28 @@ class fb_userRepo(
             }
 
     }
+    fun getUsersFcmTokens(userIDs : List<String>) : List<String> {
+        val tokens = mutableListOf<String>()
+        val userRef = database.child("users")
+        for(userID in userIDs) {
+            userRef.child(userID).child("fcmToken").addListenerForSingleValueEvent(object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val token = snapshot.getValue(String::class.java)
+                    if (token != null) {
+                        Log.d("check-token",token)
+                        tokens.add(token)
+                    }
+                }
+
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Handle error
+                }
+            })
+        }
+        return tokens
+    }
+
 
 }

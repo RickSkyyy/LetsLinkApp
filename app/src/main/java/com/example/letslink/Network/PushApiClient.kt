@@ -1,10 +1,12 @@
 package com.example.letslink.Network
 import android.content.Context
 import android.util.Log
+import com.android.volley.DefaultRetryPolicy
 import com.android.volley.toolbox.Volley
 import com.google.firebase.auth.FirebaseAuth
 import org.json.JSONObject
 import com.android.volley.toolbox.StringRequest
+import org.json.JSONArray
 
 object PushApiClient {
     fun sendMessageNotification(
@@ -20,7 +22,7 @@ object PushApiClient {
                 val requestBody = JSONObject().apply{
                     put("groupName", groupName)
                     put("messageText", text)
-                    put("tokens", fcmTokens)
+                    put("tokens", JSONArray(fcmTokens))
                 }
                 Log.d("API body", requestBody.toString())
                 val request = object : StringRequest(

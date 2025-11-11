@@ -134,15 +134,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:backgroundTint="@color/purple"
+                    android:backgroundTint="@color/orange"
                     android:text="Login via biomterics"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     app:cornerRadius="12dp"
-                    app:icon="@drawable/ic_fingerprint"
-                    app:iconGravity="textStart" />
 
+                    app:iconGravity="textStart" />
+                <!--app:icon="@drawable/ic_fingerprint"-->
                 <!-- Google Sign In Button -->
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/google_sign_in_btn"

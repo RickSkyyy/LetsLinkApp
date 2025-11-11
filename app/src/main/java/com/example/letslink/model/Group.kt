@@ -28,7 +28,8 @@ data class Group(
 
     val description: String,
 
-    var inviteLink: String? = null
+    var inviteLink: String? = null,
+
 )
 {
     constructor() : this("","", "", "", null)

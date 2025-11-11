@@ -163,6 +163,7 @@ class GroupDetailsF : Fragment() {
 
         startChatButton.setOnClickListener {
             val intent = Intent(requireContext(), GroupChatActivity::class.java)
+            intent.putExtra("groupId", groupId)
             requireContext().startActivity(intent)
         }
 

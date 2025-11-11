@@ -8,6 +8,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -103,7 +104,9 @@ class CreateGroupFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch{
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.noteState.collect { state ->
+                    Log.d("group-creation-check", state.isSuccess.toString())
                     if (state.isSuccess) {
+
                         Toast.makeText(context, "Group created successfully!", Toast.LENGTH_LONG).show()
 
                         val inviteLink = state.inviteLink
