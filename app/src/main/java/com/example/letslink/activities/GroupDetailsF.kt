@@ -25,11 +25,13 @@ import com.example.letslink.adapter.EventResultsAdapter
 import com.example.letslink.local_database.GroupDao
 import com.example.letslink.local_database.LetsLinkDB
 import com.example.letslink.model.EventVotingResults
+import com.example.letslink.online_database.fb_ChatRepo
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
 class GroupDetailsF : Fragment() {
     private lateinit var groupDao : GroupDao
+    private lateinit var fbChatRepo : fb_ChatRepo
 
     companion object{
         fun newInstance(): GroupDetailsF{
@@ -48,7 +50,7 @@ class GroupDetailsF : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        fbChatRepo = fb_ChatRepo()
         groupDao = LetsLinkDB.getDatabase(requireContext()).groupDao()
 
         val votingButton: LinearLayout = view.findViewById(R.id.btn_vote_on_events)
@@ -162,9 +164,14 @@ class GroupDetailsF : Fragment() {
 
 
         startChatButton.setOnClickListener {
-            val intent = Intent(requireContext(), GroupChatActivity::class.java)
-            intent.putExtra("groupId", groupId)
-            requireContext().startActivity(intent)
+            fbChatRepo.createChat(groupId!!) { success, chat ->
+                if(success) {
+                    Log.d("repo-chat-check", chat?.chatID ?: "no chat")
+                    val intent = Intent(requireContext(), GroupChatActivity::class.java)
+                    intent.putExtra("groupId", groupId)
+                    requireContext().startActivity(intent)
+                }
+            }
         }
 
 

@@ -1,6 +1,10 @@
 package com.example.letslink.model
 
 data class Message(
-    val text: String,
-    val isMine: Boolean // true if the message is from the user, false if from someone else
+    val messageID : String = "",
+    val senderID : String = "",
+    val chatID  : String = "",
+    val message : String = "",
+    val time : String = "",
+    val messageSenderName : String = ""
 )

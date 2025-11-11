@@ -7,16 +7,20 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.letslink.R
-import com.example.letslink.models.ChatMessage
+import com.example.letslink.model.Message
 
-class MessagesAdapter(private val messages: MutableList<ChatMessage>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+class MessagesAdapter(
+    private val messages: MutableList<Message>,
+    private val currentUserId: String
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SENT = 1
     private val TYPE_RECEIVED = 2
 
     override fun getItemViewType(position: Int): Int {
-        return if (messages[position].isSent) TYPE_SENT else TYPE_RECEIVED
+        val message = messages[position]
+        return if (message.senderID == currentUserId) TYPE_SENT else TYPE_RECEIVED
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -39,31 +43,34 @@ class MessagesAdapter(private val messages: MutableList<ChatMessage>) :
 
     override fun getItemCount() = messages.size
 
-    fun addMessage(message: ChatMessage) {
+    fun addMessage(message: Message) {
         messages.add(message)
         notifyItemInserted(messages.size - 1)
     }
 
-    // ---- ViewHolders ----
+    // ---- Sent Message ViewHolder ----
     class SentMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val messageBody: TextView = itemView.findViewById(R.id.tvMessage)
         private val messageTime: TextView = itemView.findViewById(R.id.tvTime)
-        private val messageSent: TextView = itemView.findViewById(R.id.tvSent)
+        private val messageStatus: TextView = itemView.findViewById(R.id.tvSent)
 
-        fun bind(message: ChatMessage) {
-            messageBody.text = message.text
+        fun bind(message: Message) {
+            messageBody.text = message.message
             messageTime.text = message.time
-            messageSent.text = "Sent"
+            messageStatus.text = "Sent"
         }
     }
 
+    // ---- Received Message ViewHolder ----
     class ReceivedMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val messageBody: TextView = itemView.findViewById(R.id.tvMessage)
         private val messageTime: TextView = itemView.findViewById(R.id.tvTime)
+        private val senderName: TextView? = itemView.findViewById(R.id.tvSenderName)
 
-        fun bind(message: ChatMessage) {
-            messageBody.text = message.text
+        fun bind(message: Message) {
+            messageBody.text = message.message
             messageTime.text = message.time
+            senderName?.text = message.messageSenderName
         }
     }
 }

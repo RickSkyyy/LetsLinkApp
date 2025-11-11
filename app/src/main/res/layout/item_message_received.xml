@@ -13,6 +13,15 @@
         android:background="@drawable/bg_message_received"
         android:padding="10dp"
         android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvSenderName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sender name"
+            android:textColor="@color/orange_primary"
+            android:textSize="11sp"
+            />
+
 
         <!-- Message text -->
         <TextView
