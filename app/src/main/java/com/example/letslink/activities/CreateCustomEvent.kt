@@ -11,23 +11,23 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.letslink.R
 import android.widget.EditText
-import androidx.compose.material3.DatePicker
 import com.example.letslink.SessionManager
 import android.widget.DatePicker
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.example.letslink.API_related.GroupRepo
 import com.example.letslink.API_related.LetsLinkAPI
-import com.example.letslink.API_related.UUIDConverter
+import com.example.letslink.local_database.EventDao
 import com.example.letslink.local_database.GroupDao
 import com.example.letslink.local_database.LetsLinkDB
 import com.example.letslink.local_database.UserDao
+import com.example.letslink.model.Event
 import com.example.letslink.model.Group
-import com.example.letslink.model.User
+import com.example.letslink.online_database.SyncDataManager
 import com.example.letslink.online_database.fb_EventsRepo
-import com.example.letslink.online_database.fb_userRepo
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class CreateCustomEventFragment : Fragment() {
     private lateinit var sessionManager: SessionManager
@@ -35,12 +35,12 @@ class CreateCustomEventFragment : Fragment() {
     private lateinit var groupRepo : GroupRepo
     private lateinit var db: LetsLinkDB
     private lateinit var groupDao: GroupDao
-    private lateinit var userDao: UserDao
-    private lateinit var auth: FirebaseAuth
-    private lateinit var letsLinkApi : LetsLinkAPI
+    private lateinit var eventDao : EventDao
+    private lateinit var syncManager : SyncDataManager
+
+
     private val selectedGroupIds = mutableListOf<String>()
     private val groupList = mutableListOf<Group>()
-    private val uuidConverter : UUIDConverter = UUIDConverter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,10 +55,10 @@ class CreateCustomEventFragment : Fragment() {
 
         val sharedPref = requireActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE)
         val userId = sharedPref.getString(SessionManager.KEY_USER_ID, null)
-
+        syncManager = SyncDataManager()
         groupDao = LetsLinkDB.getDatabase(requireContext()).groupDao()
         sessionManager = SessionManager(requireContext())
-
+        eventDao = LetsLinkDB.getDatabase(requireContext()).eventDao()
         repo = fb_EventsRepo(requireContext())
 
         lifecycleScope.launch{
@@ -79,7 +79,7 @@ class CreateCustomEventFragment : Fragment() {
         tvSelectedGroups.setOnClickListener {
             showGroupSelectionDialog()
         }
-
+        var eventId : Long
 
 
 
@@ -98,28 +98,86 @@ class CreateCustomEventFragment : Fragment() {
             val year = datepicker.year
             val date = "$day/$month/$year"
 
-            repo.createEvent(
-                eventTitle,
-                eventDescription,
-                eventLocation,
-                eventStartTime,
-                eventEndTime,
-                date,
-                userId!!,
-                selectedGroupIds
-            ) { isComplete ->
-                if (isComplete) {
-                    Toast.makeText(context, "Event created successfully!", Toast.LENGTH_SHORT)
-                        .show()
-                    view.postDelayed({
-                        parentFragmentManager.popBackStack()
-                    }, 1000)
 
-                } else {
-                    Toast.makeText(context, "Event creation failed!", Toast.LENGTH_SHORT).show()
+            if(syncManager.isInternetAvailable(requireContext())){
+                //insert the event online then insert the event locally make sure to ensure the isSynced is true
+                repo.createEvent(
+                    eventTitle,
+                    eventDescription,
+                    eventLocation,
+                    eventStartTime,
+                    eventEndTime,
+                    date,
+                    userId!!,
+                    selectedGroupIds
+                ) { isComplete, eventID ->
+                    if (isComplete) {
+
+                        Toast.makeText(context, "Event created successfully!", Toast.LENGTH_SHORT).show()
+                        //insert it locally now
+                        val localEvent = Event(
+                            eventId = eventID,
+                            ownerId = userId!!,
+                            title = eventTitle,
+                            description = eventDescription,
+                            location = eventLocation,
+                            startTime = eventStartTime,
+                            endTime = eventEndTime,
+                            date = date,
+                            groups = selectedGroupIds,
+                            isSynced = true
+                        )
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            try{
+                                eventDao.addEventLocally(localEvent)
+                                Toast.makeText(context, "Event created successfully!(online)", Toast.LENGTH_SHORT).show()
+
+                            }catch(e: Exception){
+                                Toast.makeText(context, "Event creation failed!", Toast.LENGTH_SHORT).show()
+                                Log.d("check-error",e.toString())
+
+                            }
+
+
+                        }
+                        view.postDelayed({
+                            parentFragmentManager.popBackStack()
+                        }, 1000)
+
+                    } else {
+                        Toast.makeText(context, "Event creation failed!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                Toast.makeText(context, "Event creation initiated!", Toast.LENGTH_SHORT).show()
+            }else{
+                //insert the event locally
+                val localEvent = Event(
+                    eventId = UUID.randomUUID().toString(),
+                      ownerId = userId!!,
+                      title = eventTitle,
+                      description = eventDescription,
+                      location = eventLocation,
+                      startTime = eventStartTime,
+                      endTime = eventEndTime,
+                      date = date,
+                      groups = selectedGroupIds,
+                    isSynced = false
+                )
+                viewLifecycleOwner.lifecycleScope.launch {
+                    try {
+                        eventDao.addEventLocally(localEvent)
+                        Toast.makeText(context, "Event created successfully!(offline)", Toast.LENGTH_SHORT).show()
+                        view.postDelayed({
+                            parentFragmentManager.popBackStack()
+                        }, 1000)
+                    }catch (e:Exception){
+                        Log.d("check-error",e.toString())
+                        Toast.makeText(context, "Event creation failed!", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
-            Toast.makeText(context, "Event creation initiated!", Toast.LENGTH_SHORT).show()
+
+
         }
 
 
