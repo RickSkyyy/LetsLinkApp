@@ -99,10 +99,10 @@ class GroupEventActivity : AppCompatActivity() {
                     })
                     tasksRV.adapter = adapter
                 }
-                eventName.text = event.title
-                eventDescription.text = event.description
-                eventLocation.text = event.location
-                eventTime.text = "${event.startTime} - ${event.endTime}"
+                eventName.text =  "Event Name: ${event.title}"
+                eventDescription.text = "Event Name: ${ event.description}"
+                eventLocation.text ="Event Name: ${ event.location}"
+                eventTime.text = "Duration: ${event.startTime} - ${event.endTime}"
 
 
 

@@ -42,8 +42,12 @@ class EventTaskAdapter(
         // Display details
         holder.taskTitle.text = task.taskName
         holder.taskDueDate.text = "Due: ${task.dueDate}"
-        holder.taskDuration.text = "Time: ${task.taskDuration}hrs"
-        holder.taskStatus.text = task.taskStatus
+        if(task.taskDuration == null){
+            holder.taskDuration.visibility = View.GONE
+        }else {
+            holder.taskDuration.text = "Time: ${task.taskDuration}hrs"
+        }
+            holder.taskStatus.text = task.taskStatus
         // Handle status and button state
         when (task.taskStatus.lowercase()) {
             "completed" -> {
@@ -78,6 +82,8 @@ class EventTaskAdapter(
             notifyItemChanged(position) // Refresh this item only
             onStatusUpdated(task)
         }
+
+
     }
 
     override fun getItemCount(): Int = taskList.size
