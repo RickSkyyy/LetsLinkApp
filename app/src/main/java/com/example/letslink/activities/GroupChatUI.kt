@@ -92,30 +92,36 @@ class GroupChatActivity : AppCompatActivity() {
                 //fetch group from database online then get the members and send the chat message to them
             chatRepo.getGroupMembers(groupID!!){members->
                 if(members.isNotEmpty()){
-                    val tokens  = userRepo.getUsersFcmTokens(members)
+
                     Log.d("check-members",members.size.toString())
-                    try{
-                        if(message.isEmpty()){
+                    try {
+                        if (message.isEmpty()) {
                             Toast.makeText(this, "Enter a message", Toast.LENGTH_SHORT).show()
                             return@getGroupMembers
                         }
-                        Log.d("check-message",message)
-                        chatRepo.sendMessage(groupID,message){ success, message ->
-                            if(success){
+                        Log.d("check-message", message)
+                        chatRepo.sendMessage(groupID, message) { success, message ->
+                            if (success) {
                                 //add to the adapter
                                 messageInput.text.clear()
-                                Log.d("check-message",message?.message!!)
-                            }else{
-                                Log.d("check-message","failed")
+                                Log.d("check-message", message?.message!!)
+                            } else {
+                                Log.d("check-message", "failed")
                             }
-
                         }
-                        PushApiClient.sendMessageNotification(this, tokens, groupname, message)
-
+                        userRepo.getUsersFcmTokens(members) { tokens ->
+                            if (tokens.isNotEmpty()) {
+                                PushApiClient.sendMessageNotification(
+                                    this,
+                                    tokens,
+                                    groupname,
+                                    message
+                                )
+                            }
+                        }
                     }catch(e : Exception){
                         Log.d("check-error",e.toString())
                     }
-
                 }
 
             }
@@ -125,18 +131,7 @@ class GroupChatActivity : AppCompatActivity() {
                 Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show()
                 //queue the messages in a database "offlineMessage" where it stores the groupID, userID who sent the message and the message itself.
             }
-                //)
 
-//            val text = messageInput.text.toString()
-//            if (text.isNotEmpty()) {
-//                val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
-//                val message = ChatMessage(true, text, time,currentUser?.uid!!,currentUser?.displayName!!)
-//                adapter.addMessage(message)
-//                recyclerView.scrollToPosition(adapter.itemCount - 1)
-//                messageInput.text.clear()
-//            } else {
-//                Toast.makeText(this, "Enter a message", Toast.LENGTH_SHORT).show()
-//            }
         }
 
         // FAB toggle

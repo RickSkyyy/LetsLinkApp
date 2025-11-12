@@ -23,8 +23,8 @@ class EventTaskAdapter(
         val taskHeader: TextView = itemView.findViewById(R.id.task_header)
         val taskDueDate: TextView = itemView.findViewById(R.id.task_due_date)
         val taskTitle: TextView = itemView.findViewById(R.id.task_title)
-        val taskFor: TextView = itemView.findViewById(R.id.task_for)
-        val taskStatus : TextView = itemView.findViewById(R.id.task_status)
+        val taskStatus: TextView = itemView.findViewById(R.id.task_status)
+
         val taskDuration: TextView = itemView.findViewById(R.id.task_duration)
         val btnInProgress: Button = itemView.findViewById(R.id.btn_In_progress)
         val btnComplete: Button = itemView.findViewById(R.id.btn_complete)
@@ -43,7 +43,7 @@ class EventTaskAdapter(
         holder.taskTitle.text = task.taskName
         holder.taskDueDate.text = "Due: ${task.dueDate}"
         holder.taskDuration.text = "Time: ${task.taskDuration}hrs"
-
+        holder.taskStatus.text = task.taskStatus
         // Handle status and button state
         when (task.taskStatus.lowercase()) {
             "completed" -> {

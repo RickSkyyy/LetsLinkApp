@@ -31,7 +31,7 @@
                 android:textColor="@color/white"
                 android:textStyle="bold" />
             <TextView
-                android:id="@+id/task_status"
+                android:id="@+id/task_status2"
 
                 android:layout_weight="2"
                 android:textSize="18sp"
@@ -72,10 +72,10 @@
             android:layout_marginBottom="4dp">
 
             <TextView
-                android:id="@+id/task_for"
+                android:id="@+id/task_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="For:"
+                android:text="Status: "
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:alpha="0.8" />
@@ -83,7 +83,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Anyone"
+                android:text="Pending"
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
@@ -123,12 +123,14 @@
             <Button
                 android:id="@+id/btn_In_progress"
                 android:text="In-Progress"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/midnight"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"/>
             <Button
                 android:id="@+id/btn_complete"
                 android:text="Completed"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/black"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"/>

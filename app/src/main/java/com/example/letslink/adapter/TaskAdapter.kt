@@ -20,7 +20,7 @@ class TaskAdapter(
         private val headerText: TextView = itemView.findViewById(R.id.task_header)   // "Snacks:"
         private val dueDateText: TextView = itemView.findViewById(R.id.task_due_date) // "Due: ..."
         private val taskTitleText: TextView = itemView.findViewById(R.id.task_title)  // "Get Snacks..."
-        private val taskForText: TextView = itemView.findViewById(R.id.task_for)      // "Anyone"
+        private val taskForText: TextView = itemView.findViewById(R.id.task_status)      // "Anyone"
         private val taskDurationText: TextView = itemView.findViewById(R.id.task_duration) // "4 hours"
 
         fun bind(task: Task) {
@@ -34,7 +34,7 @@ class TaskAdapter(
             taskTitleText.text = task.taskDescription
 
             // For: (hard-coded "Anyone" unless you add field in Task model)
-            taskForText.text = "Anyone"
+            taskForText.text = task.taskStatus
 
             // Duration
             taskDurationText.text = task.taskDuration

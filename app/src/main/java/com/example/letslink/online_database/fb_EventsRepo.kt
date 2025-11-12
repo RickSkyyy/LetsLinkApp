@@ -6,9 +6,14 @@ import androidx.room.Room
 import com.example.letslink.local_database.LetsLinkDB
 import com.example.letslink.local_database.UserDao
 import com.example.letslink.model.Event
+import com.example.letslink.model.Group
+import com.example.letslink.model.GroupResponse
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.tasks.await
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -71,5 +76,35 @@ class fb_EventsRepo(context: Context) {
         }
 
 
+    }
+    //create a method that receives the groupID and returns the members of that group
+    fun getGroupMembers (grouId : String, callback :(Boolean,List<String>) ->Unit){
+        database.child("groups").child(grouId).get()
+            .addOnSuccessListener { snapshot ->
+                val members = snapshot.children.mapNotNull { it.getValue(String::class.java) }
+                if(members.isNotEmpty()){
+                    callback(true,members)
+                    Log.d("--group members fetched Successfull","${members.size}")
+                }else{
+                    callback(false, emptyList())
+                }
+            }
+    }
+    fun getGroupMembersV2 (grouId : String, callback :(Boolean,List<String>,String) ->Unit){
+        database.child("groups").child(grouId)
+            .addListenerForSingleValueEvent(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val group = snapshot.getValue(GroupResponse::class.java)
+                    if(group != null){
+                        callback(true,group.members,group.groupName)
+                    }else{
+                        callback(false, emptyList(),"")
+                    }
+                }
+
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
     }
 }

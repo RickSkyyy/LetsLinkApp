@@ -48,28 +48,41 @@ class fb_userRepo(
             }
 
     }
-    fun getUsersFcmTokens(userIDs : List<String>) : List<String> {
-        val tokens = mutableListOf<String>()
-        val userRef = database.child("users")
-        for(userID in userIDs) {
-            userRef.child(userID).child("fcmToken").addListenerForSingleValueEvent(object : ValueEventListener {
-
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val token = snapshot.getValue(String::class.java)
-                    if (token != null) {
-                        Log.d("check-token",token)
-                        tokens.add(token)
-                    }
-                }
-
-
-                override fun onCancelled(error: DatabaseError) {
-                    // Handle error
-                }
-            })
+    fun getUsersFcmTokens(userIDs : List<String>, callback :(List<String>) -> Unit) {
+        if (userIDs.isEmpty()) {
+            callback(emptyList())
+            return
         }
-        return tokens
+
+        val tokens = mutableListOf<String>()
+        var completedCount = 0
+        val userRef = database.child("users")
+
+        for (userID in userIDs) {
+            userRef.child(userID).child("fcmToken")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val token = snapshot.getValue(String::class.java)
+                        if (token != null) {
+                            Log.d("check-token", token)
+                            tokens.add(token)
+                        }
+                        completedCount++
+
+                        if (completedCount == userIDs.size) {
+                            Log.d("check-tokens", "Final token count: ${tokens.size}")
+                            callback(tokens)
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        completedCount++
+                        if (completedCount == userIDs.size) {
+                            callback(tokens)
+                        }
+                    }
+                })
+        }
+
     }
-
-
 }

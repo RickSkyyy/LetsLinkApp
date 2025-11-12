@@ -317,4 +317,5 @@ class GroupRepo(
             println("ERROR: Failed to assign invite to user $foundUserId.")
         }
     }
+
 }

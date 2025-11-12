@@ -11,6 +11,7 @@
 
 
     <LinearLayout
+        android:padding="8dp"
         android:id="@+id/header"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -29,6 +30,7 @@
     <LinearLayout
         android:id="@+id/eventDetails"
         android:orientation="vertical"
+        android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

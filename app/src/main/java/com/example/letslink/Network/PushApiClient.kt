@@ -46,8 +46,9 @@ object PushApiClient {
         groupName: String,
         taskName : String,
         newStatus : String
-    ){
+    )
         {
+            Log.d("check-error","${fcmTokens.size}")
             FirebaseAuth.getInstance().currentUser?.getIdToken(true)
                 ?.addOnCompleteListener {
                     val idToken = it.result.token
@@ -56,7 +57,7 @@ object PushApiClient {
                         put("groupName", groupName)
                         put("taskName", taskName)
                         put("newStatus",newStatus)
-                        put("tokens", fcmTokens)
+                        put("tokens", JSONArray(fcmTokens))
                     }
                     Log.d("API body", requestBody.toString())
                     val request = object : StringRequest(
@@ -73,6 +74,9 @@ object PushApiClient {
                     }
                     Volley.newRequestQueue(context).add(request)
                 }
+                ?.addOnFailureListener {
+                    Log.d("--API check-error",it.toString())
+                }
         }
-    }
+
 }
