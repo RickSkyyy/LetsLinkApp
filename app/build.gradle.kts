@@ -153,4 +153,8 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
  //biometrics
     implementation("androidx.biometric:biometric:1.2.0-alpha05")
+
+//glide
+    implementation(libs.glide.v4160)
+
 }

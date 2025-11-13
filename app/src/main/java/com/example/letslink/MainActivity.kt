@@ -2,6 +2,7 @@ package com.example.letslink
 
 import android.animation.ValueAnimator
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -44,5 +45,17 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }, 3000)
+    }
+    override fun onNewIntent(intent: Intent){
+        super.onNewIntent(intent)
+        handleAuthRedirect(intent?.data)
+    }
+    private fun handleAuthRedirect(uri : Uri?){
+        if(uri!= null && uri.scheme == "letslink" && uri.host == "auth"){
+            val authCode = uri.getQueryParameter("code")
+            if(authCode != null) {
+
+            }
+        }
     }
 }

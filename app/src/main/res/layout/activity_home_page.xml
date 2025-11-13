@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:padding="16dp">
 
@@ -38,152 +39,164 @@
                 android:layout_marginBottom="10dp" />
 
             <FrameLayout
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!-- Orange “shadow” view (goes first, behind the card) -->
-                <View
+<!--                &lt;!&ndash; Orange “shadow” view (goes first, behind the card) &ndash;&gt;-->
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="420dp"-->
+<!--                    android:background="@color/orange_faded"-->
+<!--                    android:layout_margin="2dp"-->
+<!--                    android:translationZ="0dp" />-->
+<!--                &lt;!&ndash; Group Overview Card &ndash;&gt;-->
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:cardCornerRadius="20dp"-->
+<!--                    app:cardElevation="8dp"-->
+<!--                    app:cardBackgroundColor="@android:color/transparent"-->
+<!--                    android:layout_marginBottom="24dp">-->
+
+<!--                    <FrameLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content">-->
+
+<!--                        &lt;!&ndash; Background image &ndash;&gt;-->
+<!--                        <ImageView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:adjustViewBounds="true"-->
+<!--                            android:clipToOutline="true"-->
+<!--                            android:scaleType="centerCrop"-->
+<!--                            android:src="@drawable/event_image" />-->
+
+
+<!--                        &lt;!&ndash; Stats Grid pinned to bottom &ndash;&gt;-->
+<!--                        <GridLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="bottom"-->
+<!--                            android:columnCount="4"-->
+<!--                            android:rowCount="1"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:alignmentMode="alignMargins"-->
+<!--                            android:columnOrderPreserved="false"-->
+<!--                            android:padding="1dp">-->
+
+<!--                            &lt;!&ndash; Chats &ndash;&gt;-->
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_columnWeight="1"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:gravity="center"-->
+<!--                                android:padding="8dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="💬"-->
+<!--                                    android:textSize="20sp"-->
+<!--                                    android:layout_marginBottom="4dp" />-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="Chats"-->
+<!--                                    android:textSize="12sp"-->
+<!--                                    android:textColor="@color/orange_primary" />-->
+<!--                            </LinearLayout>-->
+
+<!--                            &lt;!&ndash; Events &ndash;&gt;-->
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_columnWeight="1"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:gravity="center"-->
+<!--                                android:padding="8dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="🎉"-->
+<!--                                    android:textSize="20sp"-->
+<!--                                    android:layout_marginBottom="4dp" />-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="Events"-->
+<!--                                    android:textSize="12sp"-->
+<!--                                    android:textColor="@color/orange_primary" />-->
+<!--                            </LinearLayout>-->
+
+<!--                            &lt;!&ndash; To-Do &ndash;&gt;-->
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_columnWeight="1"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:gravity="center"-->
+<!--                                android:padding="8dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="✅"-->
+<!--                                    android:textSize="20sp"-->
+<!--                                    android:layout_marginBottom="4dp" />-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="To-Do"-->
+<!--                                    android:textSize="12sp"-->
+<!--                                    android:textColor="@color/orange_primary" />-->
+<!--                            </LinearLayout>-->
+
+<!--                            &lt;!&ndash; Notifications &ndash;&gt;-->
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_columnWeight="1"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:gravity="center"-->
+<!--                                android:padding="8dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="🔔"-->
+<!--                                    android:textSize="20sp"-->
+<!--                                    android:layout_marginBottom="4dp" />-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="Notifications"-->
+<!--                                    android:textSize="12sp"-->
+<!--                                    android:textColor="@color/orange_primary"-->
+<!--                                    android:textAlignment="center" />-->
+<!--                            </LinearLayout>-->
+
+<!--                        </GridLayout>-->
+
+<!--                    </FrameLayout>-->
+<!--                </androidx.cardview.widget.CardView>-->
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_gravity="center"
+                    android:id="@+id/ticketMasterRecycler"
+                    tools:listitem="item_ticketmaster_event"
                     android:layout_width="match_parent"
-                    android:layout_height="420dp"
-                    android:background="@color/orange_faded"
-                    android:layout_margin="2dp"
-                    android:translationZ="0dp" />
-                <!-- Group Overview Card -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="8dp"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    android:layout_marginBottom="24dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <!-- Background image -->
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:adjustViewBounds="true"
-                            android:clipToOutline="true"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/event_image" />
-
-
-                        <!-- Stats Grid pinned to bottom -->
-                        <GridLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:columnCount="4"
-                            android:rowCount="1"
-                            android:background="@color/white"
-                            android:alignmentMode="alignMargins"
-                            android:columnOrderPreserved="false"
-                            android:padding="1dp">
-
-                            <!-- Chats -->
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_columnWeight="1"
-                                android:orientation="vertical"
-                                android:gravity="center"
-                                android:padding="8dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="💬"
-                                    android:textSize="20sp"
-                                    android:layout_marginBottom="4dp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Chats"
-                                    android:textSize="12sp"
-                                    android:textColor="@color/orange_primary" />
-                            </LinearLayout>
-
-                            <!-- Events -->
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_columnWeight="1"
-                                android:orientation="vertical"
-                                android:gravity="center"
-                                android:padding="8dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="🎉"
-                                    android:textSize="20sp"
-                                    android:layout_marginBottom="4dp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Events"
-                                    android:textSize="12sp"
-                                    android:textColor="@color/orange_primary" />
-                            </LinearLayout>
-
-                            <!-- To-Do -->
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_columnWeight="1"
-                                android:orientation="vertical"
-                                android:gravity="center"
-                                android:padding="8dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="✅"
-                                    android:textSize="20sp"
-                                    android:layout_marginBottom="4dp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="To-Do"
-                                    android:textSize="12sp"
-                                    android:textColor="@color/orange_primary" />
-                            </LinearLayout>
-
-                            <!-- Notifications -->
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_columnWeight="1"
-                                android:orientation="vertical"
-                                android:gravity="center"
-                                android:padding="8dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="🔔"
-                                    android:textSize="20sp"
-                                    android:layout_marginBottom="4dp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Notifications"
-                                    android:textSize="12sp"
-                                    android:textColor="@color/orange_primary"
-                                    android:textAlignment="center" />
-                            </LinearLayout>
-
-                        </GridLayout>
-
-                    </FrameLayout>
-                </androidx.cardview.widget.CardView>
+                    android:clipToPadding="false"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:scrollbars="horizontal"
+                    android:layout_height="wrap_content"/>
             </FrameLayout>
 
             <!-- Active Group Conversations -->

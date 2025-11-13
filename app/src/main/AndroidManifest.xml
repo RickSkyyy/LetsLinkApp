@@ -90,6 +90,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:label="TicketmasterAuth">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                        <data
+                            android:scheme="letslink"
+                            android:host="auth"
+                            android:path="/callback"
+                            />
+            </intent-filter>
         </activity> <!-- Event Voting screen -->
         <activity
             android:name=".activities.EventVoting"
