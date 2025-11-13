@@ -12,6 +12,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SwitchCompat
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,6 +22,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.letslink.R // Make sure to use your correct R package
 import com.example.letslink.local_database.LetsLinkDB
 import com.example.letslink.local_database.UserDao
+import com.example.letslink.online_database.SyncDataManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -43,6 +45,7 @@ class SettingsFragment : Fragment(),android.location.LocationListener {
     private lateinit var locationManager : LocationManager
     private val handler = Handler(Looper.getMainLooper())
     private var isSharing = false
+    private lateinit var syncManager : SyncDataManager
     @SuppressLint("MissingPermission")
     private val requestLocationPermission = registerForActivityResult( ActivityResultContracts.RequestPermission()) {
         isGranted: Boolean ->
@@ -64,6 +67,7 @@ class SettingsFragment : Fragment(),android.location.LocationListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         userDao = LetsLinkDB.getDatabase(requireContext()).userDao()
         super.onViewCreated(view, savedInstanceState)
+        syncManager = SyncDataManager(requireContext())
         //notification switch
         val notificationsSwitch = view.findViewById<SwitchCompat>(R.id.notifications_switch)
         val prefs = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
@@ -89,6 +93,23 @@ class SettingsFragment : Fragment(),android.location.LocationListener {
                 enableLocationSharing()
             }else{
                 disableLocationSharing()
+            }
+        }
+
+        //sync switch
+        val syncSwitch = view.findViewById<SwitchCompat>(R.id.sync_database_switch)
+        syncSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked) {
+                //sync the database
+                lifecycleScope.launch {
+                   val success = syncManager.pushLocalDatabaseToFirebase()
+                    if(success){
+                        Toast.makeText(requireContext(), "Sync successful!", Toast.LENGTH_SHORT).show()
+                        syncSwitch.isChecked = true
+                    }else{
+                        Toast.makeText(requireContext(), "Sync failed!", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
 
@@ -162,6 +183,7 @@ class SettingsFragment : Fragment(),android.location.LocationListener {
 
         }
     }
+    //add functionality to trigger the sync of the offline and online database
      override fun onLocationChanged(location: Location) {
         if(isSharing){
             updateLocation(location)

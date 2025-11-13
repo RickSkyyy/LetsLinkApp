@@ -55,7 +55,7 @@ class CreateCustomEventFragment : Fragment() {
 
         val sharedPref = requireActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE)
         val userId = sharedPref.getString(SessionManager.KEY_USER_ID, null)
-        syncManager = SyncDataManager()
+        syncManager = SyncDataManager(requireContext())
         groupDao = LetsLinkDB.getDatabase(requireContext()).groupDao()
         sessionManager = SessionManager(requireContext())
         eventDao = LetsLinkDB.getDatabase(requireContext()).eventDao()
@@ -79,7 +79,7 @@ class CreateCustomEventFragment : Fragment() {
         tvSelectedGroups.setOnClickListener {
             showGroupSelectionDialog()
         }
-        var eventId : Long
+
 
 
 
@@ -109,7 +109,8 @@ class CreateCustomEventFragment : Fragment() {
                     eventEndTime,
                     date,
                     userId!!,
-                    selectedGroupIds
+                    selectedGroupIds,
+                    true
                 ) { isComplete, eventID ->
                     if (isComplete) {
 

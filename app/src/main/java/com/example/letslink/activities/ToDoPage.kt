@@ -17,7 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.letslink.R
 import com.example.letslink.adapter.TaskAdapter
+import com.example.letslink.local_database.LetsLinkDB
+import com.example.letslink.local_database.TaskDao
 import com.example.letslink.model.Task
+import com.example.letslink.online_database.SyncDataManager
 import com.example.letslink.online_database.fb_TaskRepo
 import com.google.android.gms.tasks.Tasks
 import kotlinx.coroutines.launch
@@ -36,6 +39,8 @@ class ToDoFragment : Fragment() {
     }
     private lateinit var taskAdapter : TaskAdapter
     private lateinit var fb_Taskrepo: fb_TaskRepo
+    private lateinit var taskDao : TaskDao
+    private lateinit var syncManager : SyncDataManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,18 +55,28 @@ class ToDoFragment : Fragment() {
         var tasks : List<Task> = emptyList()
         val eventId = arguments?.getString(ARG_EVENT_ID)
         val recyclerView : RecyclerView = view.findViewById(R.id.tasks_recyclerView)
-
+        taskDao = LetsLinkDB.getDatabase(requireContext()).taskDao()
+        syncManager = SyncDataManager(requireContext())
 
         //initialize an empty adapter
         taskAdapter = TaskAdapter(emptyList(),{})
         recyclerView.adapter = taskAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        fb_Taskrepo = fb_TaskRepo(requireContext())
-        lifecycleScope.launch{
-            tasks = fb_Taskrepo.getTasksForEvent(eventId!!)
-            taskAdapter.updateTasks(tasks)
-            recyclerView.adapter = taskAdapter
+        if(syncManager.isInternetAvailable(requireContext())) {
+            //fetched online tasks for event
+            fb_Taskrepo = fb_TaskRepo(requireContext())
+            lifecycleScope.launch {
+                tasks = fb_Taskrepo.getTasksForEvent(eventId!!)
+                taskAdapter.updateTasks(tasks)
+                recyclerView.adapter = taskAdapter
+            }
+        }else{ //fetched local tasks for event
+            lifecycleScope.launch {
+                tasks = taskDao.getTasksForEvent(eventId!!)
+                taskAdapter.updateTasks(tasks)
+                recyclerView.adapter = taskAdapter
+            }
         }
 
         // Back Button Logic

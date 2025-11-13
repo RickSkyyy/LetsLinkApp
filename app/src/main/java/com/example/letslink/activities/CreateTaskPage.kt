@@ -1,6 +1,7 @@
 package com.example.letslink.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.letslink.R
+import com.example.letslink.local_database.LetsLinkDB
+import com.example.letslink.local_database.TaskDao
 import com.example.letslink.model.Task
+import com.example.letslink.online_database.SyncDataManager
 import com.example.letslink.online_database.fb_TaskRepo
+import kotlinx.coroutines.launch
+import java.util.UUID
 
 class CreateTaskFragment : Fragment() {
     private lateinit var fb_TaskRepo : fb_TaskRepo
+    private lateinit var taskDao : TaskDao
+    private lateinit var syncManager : SyncDataManager
     companion object {
         private const val ARG_EVENT_ID = "eventId"
 
@@ -43,7 +52,8 @@ class CreateTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val eventId = arguments?.getString(ARG_EVENT_ID)
         fb_TaskRepo = fb_TaskRepo(requireContext())
-
+        taskDao = LetsLinkDB.getDatabase(requireContext()).taskDao()
+        syncManager = SyncDataManager(requireContext())
         // Find the back arrow button assuming the ID is 'backArrow' in the layout
         val backArrow: ImageView = view.findViewById(R.id.backArrow)
 
@@ -68,12 +78,38 @@ class CreateTaskFragment : Fragment() {
             task.taskDescription = etDescription.text.toString()
             task.taskDuration = etDuration.text.toString()
             task.dueDate = date
-            fb_TaskRepo.createTask(task) { success, message ->
-                if (success) {
-                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                    parentFragmentManager.popBackStack()
-                } else {
-                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            //check for internet connection and if there is no connection use the local database
+            if(syncManager.isInternetAvailable(requireContext())) {
+                task.isSynced = true
+                fb_TaskRepo.createTask(task) { success, message ->
+                    if (success) {
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        try{
+                            lifecycleScope.launch {
+                                Log.d("sync-local-task",task.isSynced.toString())
+                                taskDao.addTaskLocally(task)
+                            }
+                        }catch (e: Exception){
+                            Toast.makeText(requireContext(), "Task creation failed! (locally)", Toast.LENGTH_SHORT).show()
+                        }
+                        parentFragmentManager.popBackStack()
+                    } else {
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }else{
+                //save Locally
+                task.taskId = UUID.randomUUID().toString()
+                task.isSynced = false
+                try {
+                    Log.d("sync-local-task",task.isSynced.toString())
+                    lifecycleScope.launch {
+                        taskDao.addTaskLocally(task)
+                        Toast.makeText(requireContext(), "Task created successfully! (locally)", Toast.LENGTH_SHORT).show()
+                        parentFragmentManager.popBackStack()
+                    }
+                }catch(e:Exception){
+                    Toast.makeText(requireContext(), "Task creation failed! (locally)", Toast.LENGTH_SHORT).show()
                 }
             }
 
