@@ -34,12 +34,14 @@ class SyncDataManager(private val context: Context) {
 
     }
 
-    suspend fun pushLocalDatabaseToFirebase () : Boolean{
+    suspend fun pushLocalDatabaseToFirebase (callback: (Boolean, Boolean) -> Unit) {
 
         taskDao = LetsLinkDB.getDatabase(context).taskDao()
         eventDao = LetsLinkDB.getDatabase(context).eventDao()
+        var bFlag1 : Boolean
+        var bFlag2 : Boolean
 
-       return try {
+        try {
             val local_tasks = taskDao.getTasksToSync()
             Log.d("sync-task length","${local_tasks.size}")
             for(task  in local_tasks){
@@ -47,23 +49,35 @@ class SyncDataManager(private val context: Context) {
                     continue
 
                 Log.d("sync-task",task.taskId)
+                task.isSynced = true
                 val taskRef = database.child("tasks").child(task.taskId)
                 taskRef.setValue(task).await()
                 taskDao.updateTaskSyncStatus(task.taskId)
             }
-             true
+             bFlag1 = true
         }catch (e: Exception){
             Log.d("sync-error",e.toString())
-            false
+            bFlag1 = false
+        }
+        try {
+            val local_events = eventDao.getEventsToSync()
+            Log.d("sync-event length","${local_events.size}")
+            for(event in local_events) {
+                if (event.eventId.isBlank())
+                    continue
+                Log.d("sync-event", event.eventId)
+                event.isSynced = true
+                val eventRef = database.child("events").child(event.eventId)
+                eventRef.setValue(event).await()
+                eventDao.updateEvents(event.eventId)
+            }
+            bFlag2 = true
+        }catch(e:Exception){
+            bFlag2 = false
         }
         //now do the events
+
+        callback(bFlag1,bFlag2)
+
     }
-    //features to sync offline and online databases:
-    /*
-    * - Create event ✅
-    * - fetch event's that belong to the current user logged in ✅
-    * - Create task for specific Event✅
-    * - fetch tasks for the event it was created for✅
-    *
-    * */
 }

@@ -14,6 +14,12 @@ interface EventDao {
      @Query("SELECT * FROM events WHERE ownerId = :userId")
      suspend fun getEventsForCurrentUser(userId: String): List<Event>
 
+     @Query("SELECT * FROM events WHERE isSynced == 0")
+     suspend fun getEventsToSync(): List<Event>
+
+     @Query("UPDATE events SET isSynced = 'true' WHERE eventId = :eventId")
+     suspend fun updateEvents(eventId: String)
+
 
 
 }

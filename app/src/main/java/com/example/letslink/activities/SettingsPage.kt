@@ -102,12 +102,16 @@ class SettingsFragment : Fragment(),android.location.LocationListener {
             if(isChecked) {
                 //sync the database
                 lifecycleScope.launch {
-                   val success = syncManager.pushLocalDatabaseToFirebase()
-                    if(success){
-                        Toast.makeText(requireContext(), "Sync successful!", Toast.LENGTH_SHORT).show()
-                        syncSwitch.isChecked = true
-                    }else{
-                        Toast.makeText(requireContext(), "Sync failed!", Toast.LENGTH_SHORT).show()
+                    syncManager.pushLocalDatabaseToFirebase(){tasksB , eventsB ->
+                       if(tasksB && eventsB){
+                           Toast.makeText(requireContext(), "Sync successful", Toast.LENGTH_SHORT).show()
+                       }else if(!tasksB && !eventsB){
+                           Toast.makeText(requireContext(), "Sync failed", Toast.LENGTH_SHORT).show()
+                       }else if(!tasksB) {
+                           Toast.makeText(requireContext(), "Sync events but Tasks Failed", Toast.LENGTH_SHORT).show()
+                       }else{
+                           Toast.makeText(requireContext(), "Sync tasks but Events Failed", Toast.LENGTH_SHORT).show()
+                       }
                     }
                 }
             }
