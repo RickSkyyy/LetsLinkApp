@@ -70,6 +70,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.animation)
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
 
     // Navigation
     implementation(libs.androidx.navigation.fragment.ktx)

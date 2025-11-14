@@ -15,5 +15,6 @@ data class Event(
     var endTime: String= "",
     var date: String= "",
     var groups: List<String>? = emptyList(),
-    var isSynced : Boolean = false
+    var isSynced : Boolean = false,
+    var imageUrl : String = ""
 )

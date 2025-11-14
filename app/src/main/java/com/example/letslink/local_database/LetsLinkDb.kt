@@ -14,7 +14,7 @@ import com.example.letslink.model.Event
 import com.example.letslink.model.Task
 import com.example.letslink.API_related.UUIDConverter
 //set up db and the dao will be have methods to write to room  (Lackner, 2025b)
-@Database(entities = [User::class,Group::class, Event::class, Task::class], version = 10, exportSchema = false)
+@Database(entities = [User::class,Group::class, Event::class, Task::class], version = 11, exportSchema = false)
 @TypeConverters(Converters::class,UUIDConverter::class)
 abstract class LetsLinkDB : RoomDatabase() {
 

@@ -136,8 +136,8 @@ class GroupDetailsF : Fragment() {
                         .addOnSuccessListener { voteSnapshot ->
                             val voteMap =
                                 voteSnapshot.value as? Map<String, String> ?: emptyMap()
-                            val yesCount = voteMap.count { it.value == "dislike" }
-                            val noCount = voteMap.count { it.value == "like" }
+                            val noCount = voteMap.count { it.value == "dislike" }
+                            val yesCount = voteMap.count { it.value == "like" }
 
                             val existingIndex = votingResults.indexOfFirst { it.eventId == event.eventId }
                             if (existingIndex != -1) {

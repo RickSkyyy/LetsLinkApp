@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.letslink.R
 import com.example.letslink.model.Event
 import com.example.letslink.model.EventVoting_m
@@ -62,7 +63,8 @@ fun saveVote(groupId: String, eventId: String, userId: String, vote: String) {
 }
 
 @Composable
-fun EventCard(event : EventVoting_m, modifier: Modifier = Modifier) {
+fun EventCard(event: EventVoting_m, modifier: Modifier = Modifier) {
+
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -70,13 +72,45 @@ fun EventCard(event : EventVoting_m, modifier: Modifier = Modifier) {
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.elevatedCardElevation(8.dp)
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-        ){
-            Text(text = event.title,fontSize = 24.sp, fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = event.description, fontSize = 16.sp)
+        Box(modifier = Modifier.fillMaxSize()) {
+
+            // --- Background image only if URL exists ---
+            if (event.imageUrl.isNotEmpty()) {
+                AsyncImage(
+                    model = event.imageUrl,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+
+                // Slight dark overlay to improve text readability
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.35f))
+                )
+            }
+
+            // --- Foreground (text) ---
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = event.title,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = if (event.imageUrl.isNotEmpty()) Color.White else Color.Black
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = event.description,
+                    fontSize = 16.sp,
+                    color = if (event.imageUrl.isNotEmpty()) Color.White else Color.Black
+                )
+            }
         }
     }
 }

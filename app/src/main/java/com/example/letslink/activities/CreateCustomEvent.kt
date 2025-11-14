@@ -110,7 +110,8 @@ class CreateCustomEventFragment : Fragment() {
                     date,
                     userId!!,
                     selectedGroupIds,
-                    true
+                    true,
+                    ""
                 ) { isComplete, eventID ->
                     if (isComplete) {
 

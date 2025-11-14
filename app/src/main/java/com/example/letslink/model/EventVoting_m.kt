@@ -7,4 +7,5 @@ data class EventVoting_m (
     val title: String = "",
     val description : String = "",
     val groups : List<String> = emptyList(),
+    val imageUrl : String = ""
 ) : Parcelable

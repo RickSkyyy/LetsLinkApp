@@ -35,7 +35,7 @@ class TicketMasterAdapter(
         val event = events[position]
 
         // Load image
-        val imageUrl = event.images?.firstOrNull()?.url
+        val imageUrl = event.images?.maxByOrNull{ it.width ?: 0 }?.url
         Glide.with(holder.itemView.context)
             .load(imageUrl)
             .into(holder.eventImage)
