@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.letslink"
-        minSdk = 27
+        minSdk = 31
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.androidx.compose.animation)
     implementation("io.coil-kt:coil-compose:2.7.0")
 
+
     // Navigation
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
@@ -92,7 +93,6 @@ dependencies {
     implementation(libs.androidx.compose.ui.text)
     implementation(libs.androidx.media3.common.ktx)
     implementation(libs.volley)
-
 
     // Testing
     testImplementation(libs.junit)
@@ -155,13 +155,20 @@ dependencies {
     testImplementation(libs.core.testing)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
- //biometrics
+    //biometrics
     implementation("androidx.biometric:biometric:1.2.0-alpha05")
-    //glide
+
+//glide
     implementation(libs.glide.v4160)
 
     //pdf reader
     implementation("com.github.barteksc:android-pdf-viewer:2.8.2") {
         exclude(group = "com.android.support")
     }
+    //translation tool
+    implementation("com.google.mlkit:translate:17.0.3")
+
 }
+
+
+

@@ -537,6 +537,13 @@
     <string name="charity_run">Gadzira Boka</string>
     <string name="birthday_party">Gadzira Chiitiko</string>
 
+    <!-- Shona -->
+    <string name="add_ticket">Wedza Tikiti</string>
+    <string name="choose_pdf_image">Sarudza PDF / Mufananidzo</string>
+    <string name="no_file_selected">Hapana faira rakasarudzwa</string>
+    <string name="save_ticket">Chengetedza Tikiti</string>
+
+
 
 </resources>
 

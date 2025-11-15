@@ -541,6 +541,10 @@
 
     <string name="charity_run">Create Group</string>
     <string name="birthday_party">Create Event</string>
+    <string name="add_ticket">Add Ticket</string>
+    <string name="choose_pdf_image">Choose PDF / Image</string>
+    <string name="no_file_selected">No file selected</string>
+    <string name="save_ticket">Save Ticket</string>
 
 
 </resources>

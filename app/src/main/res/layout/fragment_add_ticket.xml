@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:text="Add Ticket"
+        android:text="@string/add_ticket"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="20dp"
@@ -16,21 +16,21 @@
 
     <Button
         android:id="@+id/btnPickFile"
-        android:text="Choose PDF / Image"
+        android:text="@string/choose_pdf_image"
         android:layout_width="match_parent"
         android:backgroundTint="@color/orange"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/textFileName"
-        android:text="No file selected"
+        android:text="@string/no_file_selected"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btnSaveTicket"
-        android:text="Save Ticket"
+        android:text="@string/save_ticket"
         android:backgroundTint="@color/orange"
         android:layout_marginTop="30dp"
         android:layout_width="match_parent"

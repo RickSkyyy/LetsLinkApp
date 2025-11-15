@@ -1,62 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="9dp"
+    app:cardBackgroundColor="@android:color/white">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="7dp"
+        android:orientation="vertical"
         android:padding="12dp"
-        android:background="@drawable/rounded_card_background_orange"
-        android:gravity="center">
+        android:background="@drawable/rounded_card_background_orange">
 
         <!-- Event Image -->
         <ImageView
             android:id="@+id/eventImage"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:scaleType="centerCrop"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/bg_round_rect"
             android:contentDescription="Event image"
-            android:layout_marginBottom="8dp"/>
+            android:scaleType="centerCrop" />
 
         <!-- Event Title -->
         <TextView
             android:id="@+id/eventTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
+            android:layout_marginBottom="4dp"
+            android:ellipsize="end"
             android:gravity="center"
+            android:maxLines="2"
+            android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:layout_marginBottom="4dp"/>
+            android:textStyle="bold" />
 
         <!-- Event Date -->
         <TextView
             android:id="@+id/eventDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
             android:gravity="center"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:layout_marginBottom="2dp"/>
+            android:textSize="14sp" />
 
         <!-- Event Location -->
         <TextView
             android:id="@+id/eventLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="13sp"
             android:layout_marginBottom="4dp"
+            android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="1"
-            android:ellipsize="end"/>
+            android:textColor="@android:color/darker_gray"
+            android:textSize="13sp" />
 
         <!-- Event Price -->
         <TextView
@@ -66,8 +70,8 @@
             android:gravity="center"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="14sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

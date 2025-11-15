@@ -538,5 +538,10 @@
     <string name="charity_run">创建群组</string>
     <string name="birthday_party">创建活动</string>
 
+    <string name="add_ticket">添加票证</string>
+    <string name="choose_pdf_image">选择 PDF / 图片</string>
+    <string name="no_file_selected">未选择文件</string>
+    <string name="save_ticket">保存票证</string>
+
 
 </resources>
