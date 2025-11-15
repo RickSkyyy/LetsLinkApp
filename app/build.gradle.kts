@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.animation)
+    implementation("io.coil-kt:coil-compose:2.7.0")
 
     // Navigation
     implementation(libs.androidx.navigation.fragment.ktx)
@@ -91,7 +92,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.text)
     implementation(libs.androidx.media3.common.ktx)
     implementation(libs.volley)
-    implementation(libs.lifecycle.viewmodel.ktx)
+
 
     // Testing
     testImplementation(libs.junit)
@@ -142,6 +143,8 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.google.signin)
     implementation(libs.firebase.messaging)
+    implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
+    implementation("com.google.android.gms:play-services-auth:20.6.0")
 
 //    // KotlinX IO (force-stable version)
 //    implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.5.5")
@@ -154,4 +157,11 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
  //biometrics
     implementation("androidx.biometric:biometric:1.2.0-alpha05")
+    //glide
+    implementation(libs.glide.v4160)
+
+    //pdf reader
+    implementation("com.github.barteksc:android-pdf-viewer:2.8.2") {
+        exclude(group = "com.android.support")
+    }
 }
