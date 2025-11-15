@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/rounded_card_background_orange"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:gravity="center_vertical">
+
+    <!-- Left ticket icon -->
+    <ImageView
+        android:id="@+id/iconTicket"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/ic_ticket"
+        android:contentDescription="Ticket Icon"
+        android:layout_marginEnd="12dp" />
+
+    <!-- Ticket name (TextView, not editable) -->
+    <TextView
+        android:id="@+id/ticketTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="20sp"
+        android:textColor="@color/orange"
+        android:textStyle="bold"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="Ticket Name" />
+
+    <!-- Right icon: PDF or Image -->
+    <ImageView
+        android:id="@+id/iconFileType"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:contentDescription="File Type Icon"
+        android:layout_marginStart="8dp" />
+
+    <!-- Edit button -->
+    <ImageButton
+        android:id="@+id/btnEditTicket"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:src="@drawable/ic_edit"
+        android:contentDescription="Edit Ticket Name"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_marginStart="8dp"
+        app:tint="@color/orange" />
+</LinearLayout>

@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.letslink"
-        minSdk = 27
+        minSdk = 31
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -155,10 +155,18 @@ dependencies {
     testImplementation(libs.core.testing)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
- //biometrics
+    //biometrics
     implementation("androidx.biometric:biometric:1.2.0-alpha05")
 
 //glide
     implementation(libs.glide.v4160)
 
+    //pdf reader
+    implementation("com.github.barteksc:android-pdf-viewer:2.8.2") {
+        exclude(group = "com.android.support")
+    }
+
 }
+
+
+

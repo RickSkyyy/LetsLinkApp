@@ -428,21 +428,7 @@
     libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
     vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
 </string>
-    <string name="mpho_tickets">Mpho Matikiti!</string>
 
-
-    <string name="add_event">Wedzera Chiitiko</string>
-    <string name="charity_run">Mharidzo Heksheni</string>
-    <string name="birthday_party">Bhaithidhe Pati</string>
-    <string name="upcoming_events">Maitiro Auchave Nacho</string>
-    <string name="_3_active">3 Ari Kushanda</string>
-    <string name="party_plans">Zvirongwa Zvepati</string>
-    <string name="_5_unread">5 Hasina Kuverengwa</string>
-    <string name="family_group">Boka Remhuri</string>
-    <string name="_10_messages">10 Mameseji</string>
-    <string name="project_discussions">Kutaurirana nezveChirongwa</string>
-    <string name="recent_chats">Kutaurirana Kwatichangova</string>
-    <string name="active_group_conversations">Kutaurirana KweBoka Riri Kushanda</string>
     <string name="my_events">Zviitiko Zvangu</string>
     <string name="check_out_your_events">Tarisa zviitiko zvako</string>
     <string name="open_friend_compass">Vhura Friend Compass</string>
@@ -485,7 +471,6 @@
     <string name="event_description1">Tsananguro yechiitiko:</string>
     <string name="event_location">Nzvimbo YeChiitiko:</string>
     <string name="event_time">Nguva YeChiitiko:</string>
-    <string name="active_group_conversations1">Kutaurirana KweBoka Riri Kushanda</string>
     <string name="we_collect_only_what_s_necessary_to_make_planning_trips_with_friends_easy_and_safe_such_as_your_profile_info_trip_details_and_if_enabled_your_location_for_group_tracking_this_data_is_used_solely_for_features_like_coordinating_plans_sharing_updates_and_letting_friends_see_where_you_are_if_you_choose">Tinotora chete zvakakosha kuita kuti kuronga mhirizhonga nevatevedzeri vave nyore ushe, semuenzaniso profile yako, zvakakosha zvemhirizhonga, uye kana location yakabvumidzwa, nzvimbo yako kuti boka rikutevere. Data iyi inoshandiswa chete meseji dzinorongedza, kushanikirana zvinyuwa, uye kuti shamwari dzikuone kauri kana wada.</string>
     <string name="your_personal_information_and_location_are_never_shared_without_your_permission_all_data_is_encrypted_during_storage_and_transfer">Profile yako pamwe nzvimbo haidembwi pasina mvumo yako. Data yose yakachengetedzwa pakuchengetedza uye pakutumirwa.</string>
     <string name="we_do_not_sell_or_rent_your_data_to_anyone_you_can_view_update_or_delete_your_information_at_any_time_through_the_app_s_settings">Hatengi kana kuchikisa data yako kune munhu. Ungatarisa, update kana delete ruzivo rwako nguva yese kubva muzvirongwa zveapp.</string>
@@ -542,6 +527,15 @@
     <string name="time">Nguva:</string>
     <string name="status1">Mamiriro :</string>
     <string name="time1">Nguva:</string>
+
+    <string name="active_group_conversations1">Zvishandiso Zvangu</string>
+    <string name="mpho_tickets">Matakisi Angu!</string>
+    <string name="view_my_tckets">Ona Matakisi Angu Ese</string>
+    <string name="project_discussions">SOS</string>
+    <string name="_10_messages">Tumira SOS kuVanhu veKukosha</string>
+    <string name="upcoming_events">Mabasa ekukurumidza</string>
+    <string name="charity_run">Gadzira Boka</string>
+    <string name="birthday_party">Gadzira Chiitiko</string>
 
 
 </resources>

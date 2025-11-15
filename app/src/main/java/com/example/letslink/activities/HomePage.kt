@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -102,6 +103,21 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        //Navigate to my tickets page
+        val myTicketsCard = view.findViewById<CardView>(R.id.cardMyTickets)
+
+        myTicketsCard.setOnClickListener {
+            // Navigate to MyTicketsFragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, MyTicketsFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+
+
+
     }
     private fun showGroupSelectionDialog(tmEvent: TMEvent) {
         val groupName = groupList.map { it.groupName }.toTypedArray()

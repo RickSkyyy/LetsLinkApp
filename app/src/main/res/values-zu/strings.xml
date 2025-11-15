@@ -427,21 +427,7 @@
     libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
     vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
 </string>
-    <string name="mpho_tickets">Mpho Aathikithi!</string>
 
-
-    <string name="add_event">Engeza Umcimbi</string>
-    <string name="charity_run">Umgibelo Wenzuzo</string>
-    <string name="birthday_party">Umgubho Wesikhathi Sokuzalwa</string>
-    <string name="upcoming_events">Imicimbi Eziklazayo</string>
-    <string name="_3_active">3 Esebenzayo</string>
-    <string name="party_plans">Izinhlelo Zomphakathi</string>
-    <string name="_5_unread">5 Engifundwanga</string>
-    <string name="family_group">Iqembu Lomndeni</string>
-    <string name="_10_messages">10 Imilayezo</string>
-    <string name="project_discussions">Ukuxoxwa Kweprojekthi</string>
-    <string name="recent_chats">Ukuxoxa Kwasimanje</string>
-    <string name="active_group_conversations">Izingxoxo Ezisebenzayo Zeqembu</string>
     <string name="my_events">Imicimbi Yami</string>
     <string name="check_out_your_events">Bheka imicimbi yakho</string>
     <string name="open_friend_compass">Vula i-Friend Compass</string>
@@ -484,7 +470,6 @@
     <string name="event_description1">Incazelo yomcimbi:</string>
     <string name="event_location">Indawo Yomcimbi:</string>
     <string name="event_time">Isikhathi Somcimbi:</string>
-    <string name="active_group_conversations1">Izingxoxo Ezisebenzayo Zeqembu</string>
     <string name="we_collect_only_what_s_necessary_to_make_planning_trips_with_friends_easy_and_safe_such_as_your_profile_info_trip_details_and_if_enabled_your_location_for_group_tracking_this_data_is_used_solely_for_features_like_coordinating_plans_sharing_updates_and_letting_friends_see_where_you_are_if_you_choose">Sithola kuphela okudingekile ukwenza ukuphuma nabangane kube lula nokuphepha, njengolwazi lwephrofayela, imininingwane yohambo, noma indawo yakho uma kunikwe amandla, ukuze iqembu libhekane nendawo. Le data isetshenziswa kuphela emisebenzini njengokuhlela izinhlelo, ukwabelana ngazivuseleli, nokuvumela abangane bokubona ukuthi uphi uma ukhetha.</string>
     <string name="your_personal_information_and_location_are_never_shared_without_your_permission_all_data_is_encrypted_during_storage_and_transfer">Ulwazi lwakho lwangempela nendawo alwabelanwa ngaphandle kwemvume yakho. Wonke uhlaziyo kuphefumulwa ngesikhathi sokugcina nokudluliselwa.</string>
     <string name="we_do_not_sell_or_rent_your_data_to_anyone_you_can_view_update_or_delete_your_information_at_any_time_through_the_app_s_settings">Asithengisi noma asikhiphe ngomuntu noma ubani idatha yakho. Ungayibona, ibuyekeze noma isuse imininingwane yakho noma yisiphi isikhathi kusukela kuzilungiselelo zohlelo lokusebenza.</string>
@@ -542,6 +527,14 @@
     <string name="status1">Isimo :</string>
     <string name="time1">Isikhathi:</string>
 
+    <string name="active_group_conversations1">Izinsiza Zami</string>
+    <string name="mpho_tickets">Amathikithi Ami!</string>
+    <string name="view_my_tckets">Buka Wonke Amathikithi Ami</string>
+    <string name="project_discussions">SOS</string>
+    <string name="_10_messages">Thumela SOS Othintekayo Abantu</string>
+    <string name="upcoming_events">Izinyathelo Esheshayo</string>
+    <string name="charity_run">Dala Iqembu</string>
+    <string name="birthday_party">Dala Umshado</string>
 
 
 </resources>

@@ -427,19 +427,7 @@
     libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
     vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
 </string>
-    <string name="mpho_tickets">Mpho Tickets!</string>
-    <string name="add_event">Add Event</string>
-    <string name="charity_run">Charity Run</string>
-    <string name="birthday_party">Birthday Party</string>
-    <string name="upcoming_events">Upcoming Events</string>
-    <string name="_3_active">3 Active</string>
-    <string name="party_plans">Party Plans</string>
-    <string name="_5_unread">5 Unread</string>
-    <string name="family_group">Family Group</string>
-    <string name="_10_messages">10 Messages</string>
-    <string name="project_discussions">Project Discussions</string>
-    <string name="recent_chats">Recent Chats</string>
-    <string name="active_group_conversations">Active Group Conversations</string>
+
     <string name="my_events">My Events</string>
     <string name="check_out_your_events">Check out your events</string>
     <string name="open_friend_compass">Open Friend Compass</string>
@@ -482,7 +470,6 @@
     <string name="event_description1">Event description:</string>
     <string name="event_location">Event Location:</string>
     <string name="event_time">Event Time:</string>
-    <string name="active_group_conversations1">Active Group Conversations</string>
     <string name="we_collect_only_what_s_necessary_to_make_planning_trips_with_friends_easy_and_safe_such_as_your_profile_info_trip_details_and_if_enabled_your_location_for_group_tracking_this_data_is_used_solely_for_features_like_coordinating_plans_sharing_updates_and_letting_friends_see_where_you_are_if_you_choose">We collect only what\'s necessary to make planning trips with friends easy and safe, such as your profile info, trip details, and, if enabled, your location for group tracking. This data is used solely for features like coordinating plans, sharing updates, and letting friends see where you are if you choose.</string>
     <string name="your_personal_information_and_location_are_never_shared_without_your_permission_all_data_is_encrypted_during_storage_and_transfer">Your personal information and location are never shared without your permission. All data is encrypted during storage and transfer.</string>
     <string name="we_do_not_sell_or_rent_your_data_to_anyone_you_can_view_update_or_delete_your_information_at_any_time_through_the_app_s_settings">We do not sell or rent your data to anyone. You can view, update, or delete your information at any time through the app\'s settings.</string>
@@ -539,6 +526,21 @@
     <string name="time">Time:</string>
     <string name="status1">Status :</string>
     <string name="time1">Time:</string>
+
+    <!--new home page -->
+    <string name="active_group_conversations1">My Tools</string>
+
+    <string name="mpho_tickets">My Tickets!</string>
+    <string name="view_my_tckets">View All My Tickets</string>
+
+    <string name="project_discussions">SOS</string>
+    <string name="_10_messages">Send SOS to Emergency Contacts</string>
+
+
+    <string name="upcoming_events">Quick Actions</string>
+
+    <string name="charity_run">Create Group</string>
+    <string name="birthday_party">Create Event</string>
 
 
 </resources>

@@ -428,20 +428,6 @@
     libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
     vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
 </string>
-    <string name="mpho_tickets">Mpho Kaartjies!</string>
-
-    <string name="add_event">Voeg Gebeurtenis By</string>
-    <string name="charity_run">Liefdadigheidswedloop</string>
-    <string name="birthday_party">Verjaardagpartytjie</string>
-    <string name="upcoming_events">Aankomende Gebeurtenisse</string>
-    <string name="_3_active">3 Aktief</string>
-    <string name="party_plans">Partytjie-beplanning</string>
-    <string name="_5_unread">5 Ongelees</string>
-    <string name="family_group">Gesinsgroep</string>
-    <string name="_10_messages">10 Boodskappe</string>
-    <string name="project_discussions">Projek-besprekings</string>
-    <string name="recent_chats">Onlangse gesprekke</string>
-    <string name="active_group_conversations">Aktiewe Groepgesprekke</string>
     <string name="my_events">My Gebeurtenisse</string>
     <string name="check_out_your_events">Gaan kyk na jou gebeurtenisse</string>
     <string name="open_friend_compass">Maak Vriendekompas oop</string>
@@ -484,7 +470,6 @@
     <string name="event_description1">Gebeurtenis beskrywing:</string>
     <string name="event_location">Gebeurtenis Ligging:</string>
     <string name="event_time">Gebeurtenis Tyd:</string>
-    <string name="active_group_conversations1">Aktiewe Groepgesprekke</string>
     <string name="we_collect_only_what_s_necessary_to_make_planning_trips_with_friends_easy_and_safe_such_as_your_profile_info_trip_details_and_if_enabled_your_location_for_group_tracking_this_data_is_used_solely_for_features_like_coordinating_plans_sharing_updates_and_letting_friends_see_where_you_are_if_you_choose">Ons versamel slegs wat nodig is om reisbeplanning met vriende maklik en veilig te maak, soos jou profielinligting, reisbesonderhede en, indien aangeskakel, jou ligging vir groepopsporing. Hierdie data word slegs gebruik vir funksies soos die koördineer van planne, deel van bywerkings en om vriende te laat sien waar jy is as jy kies.</string>
     <string name="your_personal_information_and_location_are_never_shared_without_your_permission_all_data_is_encrypted_during_storage_and_transfer">Jou persoonlike inligting en ligging word nooit sonder jou toestemming gedeel nie. Alle data word gekodeer tydens stoor en oordrag.</string>
     <string name="we_do_not_sell_or_rent_your_data_to_anyone_you_can_view_update_or_delete_your_information_at_any_time_through_the_app_s_settings">Ons verkoop of verhuur nie jou data aan enigiemand nie. Jy kan jou inligting enige tyd beskou, bywerk of verwyder via die app se instellings.</string>
@@ -541,6 +526,15 @@
     <string name="time">Tyd:</string>
     <string name="status1">Status :</string>
     <string name="time1">Tyd:</string>
+
+    <string name="active_group_conversations1">My Gereedskap</string>
+    <string name="mpho_tickets">My Kaartjies!</string>
+    <string name="view_my_tckets">Kyk na al my kaartjies</string>
+    <string name="project_discussions">SOS</string>
+    <string name="_10_messages">Stuur SOS na Noodkontakte</string>
+    <string name="upcoming_events">Vinnige Aksies</string>
+    <string name="charity_run">Skep Groep</string>
+    <string name="birthday_party">Skep Gebeurtenis</string>
 
 
 </resources>

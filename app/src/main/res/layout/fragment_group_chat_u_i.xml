@@ -102,7 +102,7 @@
             android:layout_height="50dp"
             android:layout_margin="5dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_add"
+            app:srcCompat="@drawable/ic_addpng"
             android:scaleType="centerInside"
             app:fabSize="mini"
             app:backgroundTint="@color/orange" />

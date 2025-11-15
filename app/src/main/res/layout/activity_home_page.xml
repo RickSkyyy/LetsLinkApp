@@ -43,149 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-<!--                &lt;!&ndash; Orange “shadow” view (goes first, behind the card) &ndash;&gt;-->
-<!--                <View-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="420dp"-->
-<!--                    android:background="@color/orange_faded"-->
-<!--                    android:layout_margin="2dp"-->
-<!--                    android:translationZ="0dp" />-->
-<!--                &lt;!&ndash; Group Overview Card &ndash;&gt;-->
-<!--                <androidx.cardview.widget.CardView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:cardCornerRadius="20dp"-->
-<!--                    app:cardElevation="8dp"-->
-<!--                    app:cardBackgroundColor="@android:color/transparent"-->
-<!--                    android:layout_marginBottom="24dp">-->
 
-<!--                    <FrameLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content">-->
-
-<!--                        &lt;!&ndash; Background image &ndash;&gt;-->
-<!--                        <ImageView-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:adjustViewBounds="true"-->
-<!--                            android:clipToOutline="true"-->
-<!--                            android:scaleType="centerCrop"-->
-<!--                            android:src="@drawable/event_image" />-->
-
-
-<!--                        &lt;!&ndash; Stats Grid pinned to bottom &ndash;&gt;-->
-<!--                        <GridLayout-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="bottom"-->
-<!--                            android:columnCount="4"-->
-<!--                            android:rowCount="1"-->
-<!--                            android:background="@color/white"-->
-<!--                            android:alignmentMode="alignMargins"-->
-<!--                            android:columnOrderPreserved="false"-->
-<!--                            android:padding="1dp">-->
-
-<!--                            &lt;!&ndash; Chats &ndash;&gt;-->
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_columnWeight="1"-->
-<!--                                android:orientation="vertical"-->
-<!--                                android:gravity="center"-->
-<!--                                android:padding="8dp">-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:text="💬"-->
-<!--                                    android:textSize="20sp"-->
-<!--                                    android:layout_marginBottom="4dp" />-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:text="Chats"-->
-<!--                                    android:textSize="12sp"-->
-<!--                                    android:textColor="@color/orange_primary" />-->
-<!--                            </LinearLayout>-->
-
-<!--                            &lt;!&ndash; Events &ndash;&gt;-->
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_columnWeight="1"-->
-<!--                                android:orientation="vertical"-->
-<!--                                android:gravity="center"-->
-<!--                                android:padding="8dp">-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:text="🎉"-->
-<!--                                    android:textSize="20sp"-->
-<!--                                    android:layout_marginBottom="4dp" />-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:text="Events"-->
-<!--                                    android:textSize="12sp"-->
-<!--                                    android:textColor="@color/orange_primary" />-->
-<!--                            </LinearLayout>-->
-
-<!--                            &lt;!&ndash; To-Do &ndash;&gt;-->
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_columnWeight="1"-->
-<!--                                android:orientation="vertical"-->
-<!--                                android:gravity="center"-->
-<!--                                android:padding="8dp">-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:text="✅"-->
-<!--                                    android:textSize="20sp"-->
-<!--                                    android:layout_marginBottom="4dp" />-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:text="To-Do"-->
-<!--                                    android:textSize="12sp"-->
-<!--                                    android:textColor="@color/orange_primary" />-->
-<!--                            </LinearLayout>-->
-
-<!--                            &lt;!&ndash; Notifications &ndash;&gt;-->
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_columnWeight="1"-->
-<!--                                android:orientation="vertical"-->
-<!--                                android:gravity="center"-->
-<!--                                android:padding="8dp">-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:text="🔔"-->
-<!--                                    android:textSize="20sp"-->
-<!--                                    android:layout_marginBottom="4dp" />-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:text="Notifications"-->
-<!--                                    android:textSize="12sp"-->
-<!--                                    android:textColor="@color/orange_primary"-->
-<!--                                    android:textAlignment="center" />-->
-<!--                            </LinearLayout>-->
-
-<!--                        </GridLayout>-->
-
-<!--                    </FrameLayout>-->
-<!--                </androidx.cardview.widget.CardView>-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_gravity="center"
@@ -211,13 +69,14 @@
 
             <!-- Mpho Tickets! Card -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardMyTickets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="6dp"
                 android:background="@drawable/rounded_card_background"
                 app:cardBackgroundColor="@android:color/transparent"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -251,7 +110,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/active_group_conversations"
+                            android:text="@string/view_my_tckets"
                             android:textSize="12sp"
                             android:textColor="@color/orange_primary" />
 
@@ -268,22 +127,13 @@
             </androidx.cardview.widget.CardView>
 
             <!-- Recent Chats Section -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/recent_chats"
-                android:textSize="18sp"
-                android:textColor="@color/orange_primary"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="8dp" />
 
             <!-- Chat List -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="24dp">
+                android:layout_marginBottom="2dp">
 
                 <!-- Project Discussions -->
                 <androidx.cardview.widget.CardView
@@ -293,7 +143,7 @@
                     app:cardElevation="4dp"
                     android:background="@drawable/rounded_card_background"
                     app:cardBackgroundColor="@android:color/transparent"
-                    android:layout_marginBottom="12dp">
+                    android:layout_marginBottom="9dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -306,7 +156,7 @@
                         <TextView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:text="💼"
+                            android:text="🆘"
                             android:textSize="20sp"
                             android:gravity="center"
                             android:background="@drawable/circle_bg_orange"
@@ -338,7 +188,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="🔥"
+                            android:text="🚨"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -346,66 +196,6 @@
                 </androidx.cardview.widget.CardView>
 
                 <!-- Family Group -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp"
-                    android:background="@drawable/rounded_card_background"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    android:layout_marginBottom="12dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="16dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:text="👨‍👩‍👧‍👦"
-                            android:textSize="20sp"
-                            android:gravity="center"
-                            android:background="@drawable/circle_bg_blue"
-                            android:layout_marginEnd="12dp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/family_group"
-                                android:textSize="16sp"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/_5_unread"
-                                android:textSize="12sp"
-                                android:textColor="@color/red" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:gravity="center"
-                            android:text="5"
-                            android:textSize="12sp"
-                            android:textColor="@color/orange_primary"
-                            android:background="@drawable/circle_badge_red" />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
 
                 <!-- Party Plans -->
                 <androidx.cardview.widget.CardView
@@ -414,56 +204,7 @@
                     app:cardCornerRadius="12dp"
                     app:cardElevation="4dp"
                     android:background="@drawable/rounded_card_background"
-                    app:cardBackgroundColor="@android:color/transparent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="16dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:text="🎊"
-                            android:textSize="20sp"
-                            android:gravity="center"
-                            android:background="@drawable/circle_bg_purple"
-                            android:layout_marginEnd="12dp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/party_plans"
-                                android:textSize="16sp"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/_3_active"
-                                android:textSize="12sp"
-                                android:textColor="@color/green" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="💬"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
+                    app:cardBackgroundColor="@android:color/transparent"/>
 
             </LinearLayout>
 
@@ -475,7 +216,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/orange_primary"
                 android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="1dp" />
 
             <!-- Events List -->
             <LinearLayout
@@ -524,19 +265,12 @@
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="5 PM"
-                                android:textSize="14sp"
-                                android:textColor="@color/orange_primary" />
-
                         </LinearLayout>
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_notifications"
+                            android:src="@drawable/eventsicon"
                             app:tint="@color/orange_primary" />
 
                     </LinearLayout>
@@ -563,7 +297,7 @@
                         <TextView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:text="🏃‍♂️"
+                            android:text="‍🤼"
                             android:textSize="20sp"
                             android:gravity="center"
                             android:background="@drawable/circle_bg_green"
@@ -583,19 +317,12 @@
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="8 AM"
-                                android:textSize="14sp"
-                                android:textColor="@color/orange_primary" />
-
                         </LinearLayout>
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_notifications"
+                            android:src="@drawable/ic_groups"
                             app:tint="@color/orange_primary" />
 
                     </LinearLayout>
@@ -605,18 +332,6 @@
             </LinearLayout>
 
             <!-- Add Event Button -->
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/add_event"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:cornerRadius="12dp"
-                android:backgroundTint="@color/orange_primary"
-                android:textColor="@color/white"
-                android:drawableStart="@drawable/ic_add"
-                android:drawableTint="@color/orange_primary"
-                android:drawablePadding="8dp" />
 
         </LinearLayout>
 
