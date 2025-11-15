@@ -545,6 +545,7 @@
     <string name="choose_pdf_image">Choose PDF / Image</string>
     <string name="no_file_selected">No file selected</string>
     <string name="save_ticket">Save Ticket</string>
+    <string name="upcoming_events2">Upcoming Events</string>
 
 
 </resources>

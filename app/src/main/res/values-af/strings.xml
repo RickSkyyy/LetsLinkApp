@@ -542,6 +542,13 @@
     <string name="choose_pdf_image">Kies PDF / Beeld</string>
     <string name="no_file_selected">Geen lêer gekies nie</string>
     <string name="save_ticket">Stoor Kaartjie</string>
+
+
+
+    <!-- Afrikaans -->
+    <string name="upcoming_events2">Toekomstige Gebeurtenisse</string>
+
+
 </resources>
 
 

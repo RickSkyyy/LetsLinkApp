@@ -543,6 +543,10 @@
     <string name="no_file_selected">Hapana faira rakasarudzwa</string>
     <string name="save_ticket">Chengetedza Tikiti</string>
 
+    <!-- Shona -->
+    <string name="upcoming_events2">Miitiro Inotevera</string>
+
+
 
 
 </resources>

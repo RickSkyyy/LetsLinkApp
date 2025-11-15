@@ -544,4 +544,10 @@
     <string name="save_ticket">保存票证</string>
 
 
+
+
+    <!-- Chinese Simplified -->
+    <string name="upcoming_events2">即将举行的活动</string>
+
+
 </resources>

@@ -40,7 +40,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Upcoming Events"
+                android:text="@string/upcoming_events2"
                 android:textSize="32sp"
                 android:textColor="@color/orange_primary"
                 android:shadowColor="@color/gray"

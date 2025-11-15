@@ -540,6 +540,9 @@
     <string name="choose_pdf_image">Khetha i-PDF / Umfanekiso</string>
     <string name="no_file_selected">Akukho fayili okukhethile</string>
     <string name="save_ticket">Londa Itikiti</string>
+    <!-- Zulu -->
+    <string name="upcoming_events2">Imiceli Ezayo</string>
+
 
 
 </resources>
