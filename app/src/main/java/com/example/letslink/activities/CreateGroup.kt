@@ -94,7 +94,7 @@ class CreateGroupFragment : Fragment() {
         val description = edDesc.text.toString()
 
         if (title.isBlank() || description.isBlank()) {
-            Toast.makeText(context, context.getString(R.string.cg9_please_fill_all_fields), Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Title or description must not be empty", Toast.LENGTH_LONG).show()
             return
         }
         viewModel.onEvent(GroupEvent.setTitle(title))
@@ -107,7 +107,7 @@ class CreateGroupFragment : Fragment() {
                     Log.d("group-creation-check", state.isSuccess.toString())
                     if (state.isSuccess) {
 
-                        Toast.makeText(context, context.getString(R.string.cg9_group_created_successfully), Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Group created successfully!", Toast.LENGTH_LONG).show()
 
                         val inviteLink = state.inviteLink
                         if (!inviteLink.isNullOrEmpty()) {
@@ -140,7 +140,7 @@ class CreateGroupFragment : Fragment() {
         builder.setMessage("Share this unique invite link:\n\n$link")
             .setPositiveButton("Copy Link") { dialog, _ ->
                 copyToClipboard(link)
-                Toast.makeText(requireContext(), getString(R.string.cg9_invite_link_copied), Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Invite link copied to clipboard.", Toast.LENGTH_LONG).show()
                 dialog.dismiss()
             }
             .setNegativeButton("Done") { dialog, _ ->

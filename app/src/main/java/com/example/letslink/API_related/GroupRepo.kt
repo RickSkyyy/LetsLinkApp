@@ -1,15 +1,22 @@
 package com.example.letslink.API_related
 
+import android.util.Log
+import android.widget.TextView
+import com.example.letslink.R
 import com.example.letslink.SessionManager
+import com.example.letslink.adapter.GroupDiffCallback
 import com.example.letslink.local_database.GroupDao
 import com.example.letslink.local_database.UserDao
 import com.example.letslink.model.Group
+import com.example.letslink.model.GroupList
 import com.example.letslink.model.Invites
+import com.example.letslink.adapter.MembersAdapter
 import com.example.letslink.model.GroupResponse
 import com.example.letslink.model.InviteRequest
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.CoroutineScope
@@ -36,7 +43,7 @@ class GroupRepo(
     private val db: DatabaseReference,
     private val userDao: UserDao
 ) {
-
+    private lateinit var membersAdapter : MembersAdapter
     /**
      * Fetches groups for a user by first syncing with Firebase, then returning local data
      * This ensures groups are available offline after initial sync
@@ -255,17 +262,15 @@ class GroupRepo(
         }
     }
     fun getReceivedInvites(userId: String): Flow<List<Invites>> = callbackFlow {
-        // Defines the db path to the user's received invites
         val invitesRef = db.child("users").child(userId).child("receivedInvites")
 
-        // Define the type indicator for the entire collection
-        val typeIndicator = object : GenericTypeIndicator<Map<String, Invites>>() {}
+   val typeIndicator = object : GenericTypeIndicator<Map<String, Invites>>() {}
 
         val listener = invitesRef.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                //  Read the entire collection using enericTypeIndicator
+                //  Read the entire collection
                 val invitesMap: Map<String, Invites>? = snapshot.getValue(typeIndicator)
 
                 // Convert List<Invites>
@@ -275,16 +280,95 @@ class GroupRepo(
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle the error if the read  fails
-                close(error.toException()) // Close
+                close(error.toException())
             }
         })
-        // pauses the coroutine until the flow is closed
+
         awaitClose {
             invitesRef.removeEventListener(listener)
         }
     }
 
+    fun getGroupsWithMemberNames(userId: String): Flow<List<GroupList>> = callbackFlow {
+        val groupsRef = db.child("groups")
+        val listener = groupsRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val groupsList = mutableListOf<GroupList>()
+                snapshot.children.forEach { groupSnapshot ->
+                    val groupData = groupSnapshot.getValue(GroupList::class.java)
+                    groupData?.let { groups ->
+                        groups.groupId = groupSnapshot.key ?: ""
+                        // This correctly resolves member IDs to names
+                        fetchMemberNames(groups.members) { memberNames ->
+                            val updatedGroup = groups.copy(
+                                groupId = groupSnapshot.key ?: "",
+                                members = memberNames
+                            )
+                            groupsList.add(updatedGroup)
+                            if (groupsList.size == snapshot.children.count()) {
+                                trySend(groupsList)
+                            }
+                        }
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                close(error.toException())
+            }
+        })
+        awaitClose { groupsRef.removeEventListener(listener) }
+    }
+    private fun fetchMemberNames(memberIds: List<String>, callback: (List<String>) -> Unit) {
+        val memberNames = mutableListOf<String>()
+        val database = FirebaseDatabase.getInstance().reference
+        var completedRequests = 0
+
+        if (memberIds.isEmpty()) {
+            callback(emptyList())
+            return
+        }
+        Log.d("MEMBER DEBUG", "Fetching names for ${memberIds.size} members: $memberIds")
+
+        memberIds.forEach { memberId ->
+            database.child("users").child(memberId).get()
+                .addOnSuccessListener { snapshot ->
+                    try {
+                        val userData = snapshot.value
+                        val firstName = when (userData) {
+                            is Map<*, *> -> userData["firstName"] as? String
+                            else -> null
+                        }
+                        Log.d("MEMBER DEBUG", "Extracted firstName: $firstName")
+                        if (!firstName.isNullOrEmpty()) {
+                            memberNames.add(firstName)
+                        } else {
+                            val email = when (userData) {
+                                is Map<*, *> -> userData["email"] as? String
+                                else -> null
+                            }
+                            memberNames.add(email ?: "Unknown User")
+                        }
+                    } catch (e: Exception) {
+                        Log.e("GroupDetailsF", "Error parsing user data: ${e.message}")
+                        memberNames.add("Unknown User")
+                    }
+
+                    completedRequests++
+                    if (completedRequests == memberIds.size) {
+                        Log.d("MEMBER DEBUG", "All requests completed final member names: $memberNames")
+                        callback(memberNames)
+                    }
+                }
+                .addOnFailureListener { error ->
+                    Log.e("DEBUG", "Failed to fetch user data for $memberId: ${error.message}")
+                    memberNames.add("Unknown User")
+                    completedRequests++
+                    if (completedRequests == memberIds.size) {
+                        callback(memberNames)
+                    }
+                }
+        }
+    }
     suspend fun assignInvite(
         recipientId: String,
         groupId: String,

@@ -111,7 +111,7 @@ class LoginPage : AppCompatActivity() {
         val emailEditText: EditText = findViewById(R.id.email_edit_text)
         val passwordEditText: EditText = findViewById(R.id.password_edit_text)
 
-        // Initialize biometric components
+        //biometric components
         rememberMeCheckbox = findViewById(R.id.remember_me_checkbox)
         biometricLoginButton = findViewById(R.id.biometric_login_button)
         initBiometricAuth()
@@ -156,6 +156,9 @@ class LoginPage : AppCompatActivity() {
                         finish()
                     }
 
+                }
+                else if(state.errorMessage != null) {
+                    showLoginError(emailEditText, passwordEditText)
                 }
 
                 signUpLink.setOnClickListener {
@@ -287,7 +290,7 @@ class LoginPage : AppCompatActivity() {
         }
     }
 
-    // Shakes the text fields and shows toast
+    // Shakes the text fields and shows a toast that the information is missing
     private fun showLoginError(emailEditText: EditText, passwordEditText: EditText) {
         val shake = AnimationUtils.loadAnimation(this, R.anim.shake)
         emailEditText.startAnimation(shake)
