@@ -10,6 +10,7 @@ import com.example.letslink.API_related.GroupRepo
 import com.example.letslink.SessionManager
 import com.example.letslink.model.Group
 import com.example.letslink.local_database.GroupEvent
+import com.example.letslink.model.GroupList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -29,17 +30,24 @@ class GroupViewModel (
     private val _noteState = MutableStateFlow(GroupState())
     val noteState = _noteState.asStateFlow()
 
-    // ---  Local User ID Flow ---
-    private val currentUserId = MutableStateFlow<UUID?>(null)
 
-    // groups Flow ---
+    private val currentUserId = MutableStateFlow<UUID?>(null)
+    val groupsWithMembers = MutableStateFlow<List<GroupList>>(emptyList())
+    fun loadGroupsWithMembers(userId: String) {
+        viewModelScope.launch {
+            repository.getGroupsWithMemberNames(userId).collect { groups ->
+                groupsWithMembers.value = groups
+            }
+        }
+    }
+    // groups Flow
     val groups: StateFlow<List<Group>> = currentUserId
         .flatMapLatest { userId ->
             if (userId != null) {
                 // request the repository for the flow of groups
                 repository.getGroupsByUserId(userId)
             } else {
-                // If we don't have a user ID, return an empty flow
+                // If no user id, return an empty flow
                 flowOf(emptyList())
             }
         }
