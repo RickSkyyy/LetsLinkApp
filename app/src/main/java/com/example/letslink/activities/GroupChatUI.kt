@@ -1,7 +1,9 @@
 // GroupChatActivity.kt
 package com.example.letslink.activities
 
+import android.Manifest
 import android.content.Context
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
@@ -24,12 +26,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import androidx.annotation.RequiresPermission
 import androidx.core.view.WindowCompat
 import com.example.letslink.Network.PushApiClient
 import com.example.letslink.online_database.fb_ChatRepo
 import com.example.letslink.online_database.fb_userRepo
 
 class GroupChatActivity : AppCompatActivity() {
+    private lateinit var locationManager: LocationManager
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MessagesAdapter
@@ -44,10 +48,10 @@ class GroupChatActivity : AppCompatActivity() {
     private val auth = com.google.firebase.auth.FirebaseAuth.getInstance()
 
     private var isFabOpen = false
-    private val goingHomeTxt = "I'm Going Home"
-    private val bathroomTxt = "I'm Going to the Bathroom"
-    private val generalAssistanceTxt = "I Need Assistance"
-    private val sosTxt = "SOS - NEED HELP"
+    private val goingHomeTxt = "I'm Going Home 🏡"
+    private val bathroomTxt = "I'm Going to the Bathroom 🚽"
+    private val generalAssistanceTxt = "I Need Assistance 🙋‍♀️"
+    private val sosTxt = "SOS - NEED HELP 🆘"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -195,6 +199,7 @@ class GroupChatActivity : AppCompatActivity() {
             }
         }
         groupSOS.setOnClickListener {
+
             chatRepo.sendMessage(groupID,sosTxt){success,message ->
                 if(success){
                     try {
@@ -235,4 +240,6 @@ class GroupChatActivity : AppCompatActivity() {
         }
 
     }
+
+
 }

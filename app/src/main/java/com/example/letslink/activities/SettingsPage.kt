@@ -199,7 +199,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), android.location.
                     ) == PackageManager.PERMISSION_GRANTED
                 ) locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) else null
                 lastKnown?.let { updateLocation(it) }
-                delay(60_000)
+                delay(30000)
             }
         }
     }

@@ -145,6 +145,7 @@ class LoginPage : AppCompatActivity() {
                 if (state.isSuccess) {
                     val user = userViewModel.getUserByEmail(state.email)
                     if (user != null) {
+                        Log.d("login-email-check", user.email)
                         sessionManager.saveUserSession(user.userId, user.email, user.firstName)
                         Log.d(
                             "LoginPage",
