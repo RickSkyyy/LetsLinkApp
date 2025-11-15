@@ -537,6 +537,11 @@
     <string name="birthday_party">Skep Gebeurtenis</string>
 
 
+    <!-- Afrikaans -->
+    <string name="add_ticket">Voeg Kaartjie By</string>
+    <string name="choose_pdf_image">Kies PDF / Beeld</string>
+    <string name="no_file_selected">Geen lêer gekies nie</string>
+    <string name="save_ticket">Stoor Kaartjie</string>
 </resources>
 
 

@@ -2,6 +2,7 @@ package com.example.letslink.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -25,13 +26,13 @@ import com.example.letslink.R
 import com.example.letslink.local_database.LetsLinkDB
 import com.example.letslink.local_database.UserDao
 import com.example.letslink.online_database.SyncDataManager
+import com.example.letslink.utils.TranslationManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.to
 
 class SettingsFragment : Fragment(R.layout.fragment_settings), android.location.LocationListener {
 
@@ -49,6 +50,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), android.location.
     private val handler = Handler(Looper.getMainLooper())
     private var isSharing = false
     private lateinit var syncManager: SyncDataManager
+    private lateinit var translationManager: TranslationManager
 
     @SuppressLint("MissingPermission")
     private val requestLocationPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -60,6 +62,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), android.location.
 
         userDao = LetsLinkDB.getDatabase(requireContext()).userDao()
         syncManager = SyncDataManager(requireContext())
+        translationManager = TranslationManager(requireContext())
 
         // Map switches
         val notificationsSwitch = view.findViewById<SwitchCompat>(R.id.notifications_switch)
@@ -81,8 +84,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), android.location.
             }
         }
 
-
-// Language cards
+        // Language cards
         val langCards: Map<String, LinearLayout> = mapOf(
             "en" to view.findViewById<LinearLayout>(R.id.lang_row_english),
             "zu" to view.findViewById<LinearLayout>(R.id.lang_row_zulu),
@@ -92,7 +94,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), android.location.
         )
 
         // Load saved language and set initial checkmark
-        val prefs = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val prefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val currentLang = prefs.getString("app_language", "en") ?: "en"
         updateCheckmarks(currentLang)
 
@@ -102,9 +104,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), android.location.
         }
 
         // Notifications switch
-        notificationsSwitch.isChecked = prefs.getBoolean("notifications_enabled", true)
+        val notifPrefs = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
+        notificationsSwitch.isChecked = notifPrefs.getBoolean("notifications_enabled", true)
         notificationsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            prefs.edit().putBoolean("notifications_enabled", isChecked).apply()
+            notifPrefs.edit().putBoolean("notifications_enabled", isChecked).apply()
             if (isChecked) enablePushNotifications() else disablePushNotifications()
         }
 
@@ -134,14 +137,40 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), android.location.
     }
 
     private fun switchLanguage(languageCode: String) {
-        persistLanguage(languageCode)
-        // The toast will show in the old language, then the activity will be recreated.
-        Toast.makeText(requireContext(), getString(R.string.language_changed), Toast.LENGTH_SHORT).show()
-        activity?.recreate()
+        // Show progress dialog
+        val progressDialog = ProgressDialog(requireContext()).apply {
+            setMessage("Downloading language pack...")
+            setCancelable(false)
+            show()
+        }
+
+        // Pre-download translation model
+        viewLifecycleOwner.lifecycleScope.launch {
+            val success = translationManager.preDownloadModel(languageCode)
+
+            progressDialog.dismiss()
+
+            if (success || languageCode == "en" || languageCode == "sn") {
+                persistLanguage(languageCode)
+                translationManager.clearCache() // Clear old translations
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.language_changed),
+                    Toast.LENGTH_SHORT
+                ).show()
+                activity?.recreate()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to download language pack. Please check your connection.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
     }
 
     private fun persistLanguage(languageCode: String) {
-        val prefs = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val prefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         prefs.edit().putString("app_language", languageCode).apply()
     }
 
@@ -220,5 +249,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), android.location.
 
     override fun onLocationChanged(location: Location) {
         if (isSharing) updateLocation(location)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        translationManager.cleanup()
     }
 }

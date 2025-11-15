@@ -20,7 +20,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context) {
-        val prefs = newBase.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val prefs = newBase.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val lang = prefs.getString("app_language", "en") ?: "en"
         val locale = Locale(lang)
         val context = updateBaseContextLocale(newBase, locale)

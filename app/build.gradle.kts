@@ -165,6 +165,8 @@ dependencies {
     implementation("com.github.barteksc:android-pdf-viewer:2.8.2") {
         exclude(group = "com.android.support")
     }
+    //translation tool
+    implementation("com.google.mlkit:translate:17.0.3")
 
 }
 

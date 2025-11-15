@@ -536,6 +536,11 @@
     <string name="charity_run">Dala Iqembu</string>
     <string name="birthday_party">Dala Umshado</string>
 
+    <string name="add_ticket">Engeza Itikiti</string>
+    <string name="choose_pdf_image">Khetha i-PDF / Umfanekiso</string>
+    <string name="no_file_selected">Akukho fayili okukhethile</string>
+    <string name="save_ticket">Londa Itikiti</string>
+
 
 </resources>
 

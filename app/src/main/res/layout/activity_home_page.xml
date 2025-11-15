@@ -5,11 +5,13 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
+
     android:padding="16dp">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="35dp"
         android:fillViewport="true">
 
         <LinearLayout
@@ -18,12 +20,22 @@
             android:orientation="vertical">
 
             <!-- Header with Logo and Title -->
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:srcCompat="@drawable/header_lets_link2" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -39,22 +51,20 @@
                 android:layout_marginBottom="10dp" />
 
             <FrameLayout
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
+                android:layout_height="300dp"
+                android:layout_marginVertical="16dp">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_gravity="center"
                     android:id="@+id/ticketMasterRecycler"
-                    tools:listitem="item_ticketmaster_event"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:clipToPadding="false"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:scrollbars="horizontal"
-                    android:layout_height="wrap_content"/>
+                    android:clipChildren="false"
+                    android:paddingHorizontal="60dp"
+                    android:scrollbars="none"
+                    android:overScrollMode="never"/>
+
             </FrameLayout>
 
             <!-- Active Group Conversations -->
@@ -229,6 +239,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/cardCreateEvent"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="4dp"
                     android:background="@drawable/rounded_card_background"
@@ -282,6 +293,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
+                    android:id="@+id/cardGroupEvent"
                     app:cardElevation="4dp"
                     app:cardBackgroundColor="@android:color/transparent"
                     android:layout_marginBottom="16dp">
