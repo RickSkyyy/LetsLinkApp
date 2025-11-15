@@ -100,4 +100,23 @@ class fb_userRepo(
                 }
             }
     }
+    fun getUserEmergencyContact(userId : String, callback : (String) -> Unit) {
+        database.child("users")
+            .child(userId)
+            .child("emergencyContact")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val emergencyContact = snapshot.getValue(String::class.java)
+                    if(!emergencyContact.isNullOrEmpty()){
+                        callback(emergencyContact)
+                    }else{
+                        callback("")
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError){
+                    callback("")
+                }
+            })
+    }
 }
