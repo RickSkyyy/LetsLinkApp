@@ -1,19 +1,37 @@
-# 🚀 LetsLink
+**🚀 LetsLink**
 
-## Meet LetsLink: Your All-in-One Social Command Center
+**Meet LetsLink: Your All-in-One Social Command Center**
 
-Tired of endless “what should we do?” group chats? *LetsLink* cuts through the noise — turning indecision into action while keeping everyone safe and connected.  
+Tired of endless "what should we do?" group chats? _LetsLink_ cuts through the noise - turning indecision into action while keeping everyone safe and connected.
 
-It’s the only app you need to *organize your crew, vote on events, and watch each other’s backs* ; all in one place.
+It's the only app you need to **organize your crew, discover nearby events, vote on plans, and watch each other's backs** - all in one place.
 
-*Plan smarter. Stay safer. Never miss a moment together.*
+**Plan smarter. Discover more. Stay safer. Never miss a moment together.**
 
-🎥 *App Overview Video:* [https://youtu.be/Mrn6nlbS0SI](https://youtu.be/Mrn6nlbS0SI)  
-🔗 *API Overview Video:* [https://youtu.be/oXj7fFQ-EiA](https://youtu.be/oXj7fFQ-EiA)
+🎥 _App Overview Video:_ \[<https://youtu.be/TjffNua59_w?feature=shared\>]  
+🔗 _API Overview Video:_ <https://youtu.be/oXj7fFQ-EiA>
 
 ---
 
-## 🧩 Table of Contents
+## 🏷️ Custom Features for Marking
+For assessment purposes, the following **key features** are highlighted for lecturer evaluation:
+
+1. **Real-Time Group Chat**  
+   - Fully functional chat system integrated into every group.  
+   - Supports text messages, emojis, and notifications via Firebase Cloud Messaging (FCM).  
+   - Ensures chat history is synced across all group members in **real-time**.
+
+2. **Ticketmaster Event Puller**  
+   - Dynamically fetches **Ticketmaster events** relevant to users’ location.  
+   - Allows users to discover concerts, shows, and events nearby.  
+   - Integrates seamlessly with group voting and planning workflow.  
+
+These are the **two main features we would like the lecturer to mark**.
+---
+
+
+**🧩 Table of Contents**
+
 - [Features](#-features)
 - [Custom Features (API Integrated)](#-custom-features-api-integrated)
 - [Technology Stack](#-technology-stack)
@@ -23,185 +41,141 @@ It’s the only app you need to *organize your crew, vote on events, and watch e
 - [Contributors](#-contributors)
 - [License](#-license)
 
----
+**✨ Features**
 
-## ✨ Features
+**🔍 Discover Local Events**
 
-### 🔐 User Registration & Authentication
-- Secure onboarding using *email and password* (min. 8 characters, at least one digit).  
-- *Single Sign-On (SSO)* via *Google* and *Facebook* using *OAuth 2.0*.  
-- *Biometric Authentication* (fingerprint and face unlock) using Android’s *BiometricPrompt API*.  
-- Offers a smooth, secure login and registration process across all Android devices.
+- Explore **concerts, festivals, parties, and casual hangouts** happening nearby.
+- Vote on events with your group to decide what's most exciting.
+- Stay updated on popular events in real-time.
 
----
+**🔐 User Registration & Authentication**
 
-### 👥 Group Creation & Management
-- Create and manage both *temporary groups* (for one-time events) and *permanent groups* (for ongoing circles).  
-- Invite members via *email, username, or phone number*.  
+- Secure onboarding with **email and password** (min. 8 characters, at least one digit).
+- **Single Sign-On (SSO)** via Google and Facebook using OAuth 2.0.
+- **Biometric Authentication** (fingerprint & face unlock) with Android's BiometricPrompt API.
+- Smooth, secure login and registration across all Android devices.
+
+**👥 Group Creation & Management**
+
+- Create **temporary groups** (for one-time events) or **permanent groups** (for ongoing social circles).
+- Invite members via email, username, or phone number.
 - Each group includes:
-  - Real-time group chat  
-  - Event voting  
-  - Collaborative to-do lists  
-  - Safety and emergency alerts  
+  - Real-time group chat
+  - Event voting
+  - Collaborative to-do lists
+  - Emergency alerts and safety notifications
 
-Groups act as a *central hub* for communication, coordination, and safety.
+Groups act as a **central hub** for communication, planning, and safety.
 
----
+**🗳️ Event Voting with Swipe Interface**
 
-### 🗳 Event Voting with Swipe Interface
-- Enjoy a *Tinder-style swipe UI* for easy, fun event voting.  
-- Swipe *right* to vote Yes, *left* to vote No.  
-- Event cards include:
-  - Name  
-  - Description  
-  - Location  
-  - Date and time  
-  - Live vote count  
-- Votes are tallied in *real-time*, ensuring transparency and democratic decision-making.
+- **Tinder-style swipe UI** for fast, fun voting on events.
+- Swipe **right** for Yes, **left** for No.
+- Event cards display:
+  - Name
+  - Description
+  - Location
+  - Date and time
+  - Live vote count
+- Votes update **in real-time** for transparent group decision-making.
 
----
+**🎉 Custom Event Creation**
 
-### 🎉 Custom Event Creation
-- Create *personalized events* (e.g., picnics, braais, meetups).  
-- Add *event name, **location, **date, **time, optional **description, and **event image*.  
-- Custom events are visible to all group members for voting and coordination.  
+- Create **personalized events** like picnics, braais, or meetups.
+- Add **name, location, date, time, description, and event image**.
+- Events appear in the group for **voting and coordination**.
 
----
+**💬 Real-Time Group Chat**
 
-### 💬 Real-Time Group Chat
-- Real-time *messaging system* built into every group.  
-- Supports *text messages* and *emojis* (attachments and media planned for future updates).  
-- Push notifications via *Firebase Cloud Messaging (FCM)* ensure users never miss updates.  
-- Chat history is stored and *synced across devices* using Firebase Realtime Database.
+- Built-in **messaging system** for all groups.
+- Supports **text messages and emojis** (attachments/media supported in future updates).
+- Push notifications via **Firebase Cloud Messaging (FCM)** keep users updated.
+- Chat history is synced across devices in real-time.
 
----
+**📝 Collaborative To-Do Lists**
 
-### 📝 Collaborative To-Do Lists
-- Create and share *group-based task lists* for better event organization.  
+- Share **group-based task lists** for better event planning.
 - Tasks include:
-  - Task name  
-  - Optional due date/time  
-  - Optional member assignment  
-- Any member can *mark tasks complete/incomplete*, promoting shared responsibility.  
+  - Name
+  - Optional due date/time
+  - Optional member assignment
+- All members can mark tasks **complete/incomplete**, promoting shared responsibility.
 
-Perfect for reminders like “bring cash,” “buy snacks,” or “confirm transport.”
+**🛡️ Emergency Alerts & Safety Features**
 
----
+- **Quick-access emergency buttons** for pre-defined alerts like:
+  - "I'm going home"
+  - "I need help"
+  - "Going to the bathroom"
+- Alerts notify **group members and a trusted external contact** instantly.
+- **Live location sharing** ensures everyone can stay safe during events.
 
-## 🔧 Custom Features (API Integrated)
-LetsLink’s backend API powers several interactive features that make collaboration seamless:
+**📶 Offline Functionality**
 
-1. *Group Creation & Management* – API endpoints handle user invitations, group type configuration, and group membership tracking.  
-2. *Custom Event Creation* – Users can push new event data (name, location, description, image, date/time) to the database through API calls.  
-3. *Collaborative To-Do Lists* – API endpoints manage creation, updates, and syncing of to-do list items across all members in real time.  
+- Access previously loaded events, chats, and to-do lists **without internet**.
+- Actions performed offline **sync automatically** when connectivity is restored.
 
-📺 *Watch the API video:* [https://youtu.be/oXj7fFQ-EiA](https://youtu.be/oXj7fFQ-EiA)
+**🔧 Custom Features (API Integrated)**
 
----
+LetsLink's backend API powers interactive features for seamless collaboration:
 
+- **Group Management** - API endpoints handle invitations, group type, and membership tracking.
+- **Event Creation** - Users push new events (name, location, description, image, date/time) via API.
+- **Collaborative To-Do Lists** - API endpoints manage creation, updates, and real-time syncing of tasks.
+- **Real-Time Event Discovery** - API enables fetching popular events near users dynamically.
 
-## ⚙ Technology Stack
+📺 _Watch the API video:_ <https://youtu.be/oXj7fFQ-EiA>
 
-| Component       | Technology                                    |
-|-----------------|-----------------------------------------------|
-| Frontend        | Kotlin + XML (Android Studio)                 |
-| Backend         | Firebase Realtime Database                     |
-| Authentication  | Firebase Auth, OAuth 2.0 (Google & Facebook) |
-| Notifications   | Firebase Cloud Messaging (FCM)               |
-| API Integration | Custom REST endpoints with Firebase           |
-| Security        | Android BiometricPrompt API                   |
-| Version Control | Git & GitHub                                  |
+**⚙️ Technology Stack**
 
-## 🌐 Tech Stack Diagram
-```mermaid
-graph TD
-    A[Frontend] -->|UI & UX| B(Kotlin + XML)
-    A -->|Runs on| C[Android Devices]
-    D[Backend] -->|Stores Data| E[Firebase Realtime DB]
-    D -->|Handles Auth| F[Firebase Auth & OAuth2]
-    D -->|Push Notifications| G[FCM]
-    D -->|APIs| H[Custom REST Endpoints]
-    I[Security] -->|Biometrics| J[Android BiometricPrompt API]
-    K[Version Control] --> L[Git & GitHub]
+| **Component** | **Technology** |
+| --- | --- |
+| Frontend | Kotlin + XML (Android Studio) |
+| Backend | Firebase Realtime Database |
+| Authentication | Firebase Auth, OAuth 2.0 (Google & Facebook) |
+| Notifications | Firebase Cloud Messaging (FCM) |
+| API Integration | Custom REST endpoints with Firebase |
+| Security | Android BiometricPrompt API |
+| Version Control | Git & GitHub |
 
-    B --> C
-    E --> F
-    F --> G
-    H --> D
-    J --> B 
-```
----
+**🧠 API Integration**
 
-## 🧠 API Integration
+- **Realtime Syncing:** Chat, event votes, and to-do lists update instantly.
+- **Authentication:** Secure login/registration with Firebase Auth & OAuth 2.0.
+- **Cloud Messaging:** FCM delivers real-time notifications for chats, events, and emergency alerts.
+- **Biometric Integration:** Native fingerprint & face unlock for device-level security.
 
-LetsLink’s core functionality is built around seamless API connectivity between the app and Firebase:
+**🔒 Security Highlights**
 
-- *Realtime Syncing:* Firebase Realtime Database enables instant updates for chat, event votes, and to-do lists.  
-- *Authentication:* Firebase Authentication and OAuth 2.0 provide secure login/registration pathways.  
-- *Cloud Messaging:* FCM handles real-time notifications for chats, event updates, and safety alerts.  
-- *Biometric Integration:* Android’s BiometricPrompt API offers native device-level authentication.  
+- **Password Policy:** Minimum 8 characters, one numeric digit.
+- **OAuth 2.0 Compliance:** Safe, verified login through Google & Facebook.
+- **Biometric Security:** Fingerprint and face unlock supported.
+- **Encrypted Communication:** All Firebase data encrypted in transit and at rest.
+- **Secure Tokens:** Authentication tokens managed to prevent unauthorized access.
 
----
+**📲 Installation & Setup**
 
-## 🔒 Security Highlights
+- **Clone this repository:**
 
-Security and privacy are central to LetsLink’s design:
+git clone \[repo link\]
 
-- *Password Policy:* Minimum 8 characters with at least one numeric digit.  
-- *OAuth 2.0 Compliance:* Safe and verified third-party login through Google and Facebook.  
-- *Biometric Security:* Fingerprint and face unlock supported.  
-- *Encrypted Communication:* All Firebase data is encrypted in transit and at rest.  
-- *Authentication Tokens:* Managed securely through Firebase Auth to prevent unauthorized access.  
+- **Open in Android Studio:**
+  - Open project folder
+  - Sync Gradle dependencies
+- **Configure Firebase:**
+  - Add google-services.json
+  - Enable Firebase Authentication, Realtime Database, and Cloud Messaging
+- **Build & Run:**
+  - Compile and install on a physical device or emulator
 
----
+**🏆 Contributors**
 
-## 📲 Installation & Setup
-### 1. Clone this repository:
-0.
-   ```bash
-   git clone https://github.com/st10258321/LetsLink.git ```
-  
+**ST10258321** - Zalano Poole
 
-### 2. Open the project in Android Studio
+**ST10408316** - Mpho Tlokotsi
 
-1.  Launch **Android Studio**.
-    
-2.  Click on **File > Open**.
-    
-3.  Navigate to the folder where you cloned the repository and select it.
-    
-4.  Wait for Android Studio to sync the project and download dependencies.
-    
+**ST10303522** - Derrick Mungwira
 
-### 3. Configure your environment
+**ST10268411** - Neo Phalama
 
--   Make sure you have the **latest Android SDK** installed.
-    
--   Ensure your **Java JDK** version matches the project requirements.
-    
--   Connect an Android device via USB or set up an **Android Emulator**.
-    
-
-### 4. Build the project
-
--   Click on **Build > Make Project** or press `Ctrl+F9` to build.
-    
--   Resolve any missing dependencies if prompted.
-    
-
-### 5. Run the app
-
--   Select your device/emulator from the target dropdown.
-    
--   Click **Run > Run 'app'** or press `Shift+F10`.
-    
--   The app should launch on your selected device.
-    
-
-
-
-
-   
-
-
-use this one instead the code runs better and the graph shows
